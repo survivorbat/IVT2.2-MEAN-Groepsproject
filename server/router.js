@@ -3,31 +3,9 @@ const router = express.Router();
 const expressJWT = require('express-jwt'); 
 require('dotenv').config();
 
-router.use(expressJWT({ 
-    secret: process.env.SECRET_KEY 
-}).unless({ 
-    path: [
-        { url: /\/api*/, methods: ['OPTIONS']  },
-        { url: '/api/token', methods: ['POST']  },
-        { url: '/favicon.ico'}
-    ]
-}));
-
 router.options(/\/api*/, (req,res) => {
     res.status(204).send().end();
 });
-
-router.get("/api", (req,res,next) => {
-    res.status(200).json({
-        message:"Welcome to the Group project API! Please, make yourself at home :)",
-        routes: [
-            {
-                resource_name: "",
-                url: req.protocol+"://"+req.get('host')+"/api",
-            },
-        ]
-    });
-})
 
 const authroutes = require('./routes/auth_routes');
 router.use('/api',authroutes);
