@@ -1,21 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const expressJWT = require('express-jwt'); 
-require('dotenv').config();
 
 router.options(/\/api*/, (req,res) => {
     res.status(204).send().end();
 });
 
-const authroutes = require('./routes/auth_routes');
-router.use('/api',authroutes);
+const chatboxroutes = require('./routes/chatbox_routes');
+router.use('/api/chatboxes',chatboxroutes);
 
 router.use((error,req,res,next) => {
-    if(error.name==="ValidationError"){
-        error.status=422;
-    } else if(error.name==="CastError"){
-        error.status=422
-    }
 	res.status(error.status || 500).send({
         message: error.message,
         code: error.code,

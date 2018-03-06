@@ -1,60 +1,65 @@
-const {Film} = require('../models/film')
-const {Showing} = require('../models/showing')
-const {Ticket} = require('../models/ticket')
+const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (u:chatbox) RETURN {id: ID(), name: u.name, maxPeople: u.maxPeople, since: u.since} as chatbox";
+        const query = "MATCH (u:chatbox) RETURN {id: ID(u), name: u.name, maxPeople: u.maxPeople, since: u.since} as chatbox"
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
+            .then(transformIntegers)
             .then((result) => {
-                res.status(200).json(result);
+                res.status(200).json(result)
             })
-            .catch(next);
+            .catch(next)
     },
     add(req,res,next){
-        if(req.body.name===undefined || req.body.lengte===undefined){
-            return res.status(422).json({"result":"Required body parameters are: name, diersoort, dierentuin, geslacht, gewicht, lengte"});
+        if(req.body.name===undefined || req.body.maxPeople===undefined){
+            return res.status(422).json({"result":"Required body parameters are: name, maxPeople"})
         }
-        const params = {name: req.body.name, diersoort: req.body.diersoort, dierentuin: req.body.dierentuin, geslacht: req.body.geslacht, gewicht: req.body.gewicht, lengte: req.body.lengte};
-        const new_query = "MATCH (diersoort:diersoort {name:$diersoort}) MATCH (dierentuin:dierentuin {name:$dierentuin}) CREATE (u:dier {name:$name,gewicht:$gewicht, lengte:$lengte, geslacht:$geslacht}) CREATE (u)-[:is_een]->(diersoort) CREATE (u)-[:woont_in]->(dierentuin)";
+        const params = {name: req.body.name, maxPeople: req.body.maxPeople}
+        const new_query = "CREATE (u:chatbox {name:$name,maxPeople:$maxPeople, since: timestamp()})"
         session.run(new_query,params)
             .then((result) => {
-                res.status(201).json(result);
+                res.status(201).json(result)
             })
-            .catch(next);
-    },
-    addBaby(req,res,next){
-        if(req.body.name===undefined || req.body.diersoort ===undefined || req.body.dierentuin === undefined || req.body.geslacht === undefined || req.body.gewicht === undefined || req.body.lengte===undefined || req.body.vader ===undefined || req.body.moeder === undefined){
-            return res.status(422).json({"result":"Required body parameters are: name, diersoort, dierentuin, geslacht, gewicht, lengte, vader, moeder"});
-        }
-        const params = {name: req.body.name, diersoort: req.body.diersoort, dierentuin: req.body.dierentuin, geslacht: req.body.geslacht, gewicht: req.body.gewicht, lengte: req.body.lengte, vader: req.body.vader, moeder: req.body.moeder};
-        const new_query = "MATCH (diersoort:diersoort {name:$diersoort}) MATCH (dierentuin:dierentuin {name:$dierentuin}) MATCH (vader:dier {name:$vader}) MATCH (moeder:dier {name:$moeder}) CREATE (u:dier {name:$name,gewicht:$gewicht, lengte:$lengte, geslacht:$geslacht}) CREATE (u)-[:is_een]->(diersoort) CREATE (u)-[:woont_in]->(dierentuin) CREATE (vader)-[:heeft_kind]->(u) CREATE (moeder)-[:heeft_kind]->(u)";
-        session.run(new_query,params)
-            .then((result) => {
-                res.status(201).json(result);
-            })
-            .catch(next);
+            .catch(next)
     },
     update(req,res,next){
-        if(req.body.gewicht === undefined || req.body.lengte===undefined){
-            return res.status(422).json({"result":"Required body parameters are: gewicht, lengte"});
+        if(req.body.name === undefined || req.body.maxPeople===undefined){
+            return res.status(422).json({"result":"Required body parameters are: name, maxPeople"})
         }
-        const params = {gewicht: req.body.gewicht, lengte: req.body.lengte, name: req.params.id};
-        const new_query = "MATCH (dier:dier {name:$name}) SET dier.gewicht=$gewicht, dier.lengte=$lengte";
+        const params = {name: req.body.name, maxPeople: req.body.maxPeople}
+        const new_query = "MATCH (chatbox:chatbox {name:$name}) SET chatbox.name=$name, chatbox.maxPeople=$maxPeople"
         session.run(new_query,params)
             .then((result) => {
-                res.status(201).json(result);
+                res.status(201).json(result)
             })
-            .catch(next);
+            .catch(next)
     },
     delete(req,res,next){
-        const params = {name: req.params.id};
-        const new_query = "MATCH (n:dier {name:$name}) DETACH DELETE (n)";
+        const params = {name: req.params.id}
+        const new_query = "MATCH (n:chatbox {name:$name}) DETACH DELETE (n)"
         session.run(new_query,params)
             .then((result) => {
-                res.status(201).json(result);
+                res.status(201).json(result)
             })
-            .catch(next);
+            .catch(next)
     }
 }
+
+const transformIntegers = function(result) {
+    return new Promise( (resolve,reject) => {
+      try {
+        result.forEach((row, i)=>  {
+            Object.keys(row).forEach((val, j) => {
+
+                row[val] = neo4j.isInt(row[val]) 
+                ? (neo4j.integer.inSafeRange(row[val]) ? row[val].toNumber() : row[val].toString()) 
+                : row[val];
+            })
+        })
+        resolve(result);
+      } catch (error) {
+          reject( error );
+      }
+    });
+  };

@@ -16,7 +16,7 @@ app.use(cors());
 const router = require('./router');
 app.use(router);
 
-server.listen(process.env.PORT || 5000, () => { 
+app.listen(process.env.PORT || 5000, () => { 
 	if(process.env.PORT !== undefined){
 		console.log('Server gestart op poort '+process.env.PORT); 
 	} else {
