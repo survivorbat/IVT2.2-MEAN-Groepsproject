@@ -1,12 +1,12 @@
 const express = require('express')
 const routes = express.Router()
 
-const usercontroller = require('../controllers/ctrl_user')
+const chatboxcontroller = require('../controllers/ctrl_chatbox')
 
-routes.get('/', usercontroller.getAll)
-routes.get('/:id', usercontroller.getById)
-routes.post('/', usercontroller.post)
-routes.patch('/:id', usercontroller.update)
-routes.delete('/:id', usercontroller.delete)
+routes.get('/', chatboxcontroller.getAll)
+routes.get('/:id', chatboxcontroller.getById)
+routes.post('/', chatboxcontroller.post)
+routes.patch('/:id', chatboxcontroller.update)
+routes.delete('/:id', chatboxcontroller.delete)
 
 module.exports = routes;

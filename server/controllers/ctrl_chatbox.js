@@ -4,7 +4,7 @@ const {Ticket} = require('../models/ticket')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (u:dier) RETURN {name: u.name, gender: u.geslacht, weight: u.gewicht, length: u.lengte} as dier";
+        const query = "MATCH (u:chatbox) RETURN {id: ID(), name: u.name, maxPeople: u.maxPeople, since: u.since} as chatbox";
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
             .then((result) => {
@@ -12,38 +12,8 @@ module.exports = {
             })
             .catch(next);
     },
-    getByDierentuin(req, res, next){
-        const params = {name: req.params.id};
-        const query = "MATCH (u:dier)-[:woont_in]-(d:dierentuin {name: $name}) RETURN {name: u.name, gender: u.geslacht, weight: u.gewicht, length: u.lengte} as dier";
-        session.run(query, params)
-            .then(result => result.records.map(item => item._fields[0]))
-            .then((result) => {
-                res.status(200).json(result);
-            })
-            .catch(next);
-    },
-    getByDiersoort(req, res, next){
-        const params = {name: req.params.id};
-        const query = "MATCH (u:dier)-[:is_een]-(d:diersoort {name: $name}) RETURN {name: u.name, gender: u.geslacht, weight: u.gewicht, length: u.lengte} as dier";
-        session.run(query, params)
-            .then(result => result.records.map(item => item._fields[0]))
-            .then((result) => {
-                res.status(200).json(result);
-            })
-            .catch(next);
-    },
-    getByName(req, res, next){
-        const params = {name: req.params.id};
-        const query = "MATCH (u:dier {name: $name}) RETURN {name: u.name, gender: u.geslacht, weight: u.gewicht, length: u.lengte} as dier";
-        session.run(query, params)
-            .then(result => result.records.map(item => item._fields[0]))
-            .then((result) => {
-                res.status(200).json(result);
-            })
-            .catch(next);
-    },
     add(req,res,next){
-        if(req.body.name===undefined || req.body.diersoort ===undefined || req.body.dierentuin === undefined || req.body.geslacht === undefined || req.body.gewicht === undefined || req.body.lengte===undefined){
+        if(req.body.name===undefined || req.body.lengte===undefined){
             return res.status(422).json({"result":"Required body parameters are: name, diersoort, dierentuin, geslacht, gewicht, lengte"});
         }
         const params = {name: req.body.name, diersoort: req.body.diersoort, dierentuin: req.body.dierentuin, geslacht: req.body.geslacht, gewicht: req.body.gewicht, lengte: req.body.lengte};
