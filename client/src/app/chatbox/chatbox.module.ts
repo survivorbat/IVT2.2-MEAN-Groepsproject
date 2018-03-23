@@ -6,6 +6,6 @@ import { ChatboxService } from './services/chatbox.service';
   imports: [
     CommonModule
   ],
-  declarations: [ChatboxService]
+  declarations: []
 })
 export class ChatboxModule { }

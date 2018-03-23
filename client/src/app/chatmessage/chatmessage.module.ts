@@ -6,6 +6,6 @@ import { MessageService } from './services/message.service';
   imports: [
     CommonModule
   ],
-  declarations: [MessageService]
+  declarations: []
 })
 export class ChatmessageModule { }
