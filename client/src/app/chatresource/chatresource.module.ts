@@ -11,6 +11,7 @@ import { ResourcelistComponent } from './components/resourcelist/resourcelist.co
     CommonModule,
     HttpClientModule
   ],
+  declarations: [ResourcelistComponent],
   providers: [OvService, FilmService, ChatresourceService]
 })
 export class ChatresourceModule { }
