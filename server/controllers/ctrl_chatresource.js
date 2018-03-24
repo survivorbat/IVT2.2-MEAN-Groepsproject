@@ -2,7 +2,7 @@ const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (u:chatbox) RETURN {id: ID(u), name: u.name, maxPeople: u.maxPeople, since: u.since, description: u.description} as chatbox"
+        const query = "MATCH (u:chatresource) RETURN {id: ID(u), title: u.title, url: u.url, description: u.description, since: u.since} as chatresource"
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
             .then(transformIntegers)
@@ -12,11 +12,11 @@ module.exports = {
             .catch(next)
     },
     add(req,res,next){
-        if(req.body.name===undefined || req.body.maxPeople===undefined || req.body.description===undefined){
-            return res.status(422).json({"result":"Required body parameters are: name, maxPeople, description"})
+        if(req.body.title===undefined || req.body.description===undefined || req.body.message===undefined || req.body.url===undefined){
+            return res.status(422).json({"result":"Required body parameters are: title, description, message, url"})
         }
-        const params = {name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "CREATE (u:chatbox {name:$name,description:$description,maxPeople:$maxPeople, since: timestamp()})"
+        const params = {title: req.body.title, description: req.body.description, message: req.body.message, url: req.body.url}
+        const new_query = "MATCH (n:chatmessage {text: $message}) CREATE (u:chatresource {title:$title, url: $url,description:$description, since: timestamp()})-[:MENTIONED_IN]->(n)"
         session.run(new_query,params)
             .then((result) => {
                 res.status(201).json(result)
@@ -24,11 +24,11 @@ module.exports = {
             .catch(next)
     },
     update(req,res,next){
-        if(req.body.name === undefined || req.body.maxPeople===undefined || req.body.description===undefined){
-            return res.status(422).json({"result":"Required body parameters are: name, maxPeople"})
+        if(req.body.title===undefined || req.body.description===undefined){
+            return res.status(422).json({"result":"Required body parameters are: title, description"})
         }
-        const params = {name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "MATCH (chatbox:chatbox {name:$name}) SET chatbox.name=$name, chatbox.maxPeople=$maxPeople, chatbox.description = $description"
+        const params = {title: req.body.title, description: req.body.description, url: req.body.url}
+        const new_query = "MATCH (chatresource:chatresource {title:$title}) SET chatresource.title=$title, chatresource.url = $url chatresource.description=$description"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)
@@ -36,8 +36,8 @@ module.exports = {
             .catch(next)
     },
     delete(req,res,next){
-        const params = {name: req.params.id}
-        const new_query = "MATCH (n:chatbox {name:$name}) DETACH DELETE (n)"
+        const params = {title: req.params.id}
+        const new_query = "MATCH (n:chatresource {title:$title}) DETACH DELETE (n)"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)
