@@ -40,7 +40,7 @@ module.exports = {
         const new_query = "MATCH (n:chatbox {name:$name}) DETACH DELETE (n)"
         session.run(new_query,params)
             .then((result) => {
-                res.status(201).json(result)
+                res.status(200).json(result)
             })
             .catch(next)
     }
