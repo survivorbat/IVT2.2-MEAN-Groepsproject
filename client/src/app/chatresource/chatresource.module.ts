@@ -10,6 +10,6 @@ import { ChatresourceService } from './services/chatresource.service';
     CommonModule,
     HttpClientModule
   ],
-  declarations: [OvService, FilmService, ChatresourceService]
+  providers: [OvService, FilmService, ChatresourceService]
 })
 export class ChatresourceModule { }
