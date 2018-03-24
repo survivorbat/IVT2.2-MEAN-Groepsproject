@@ -1,5 +1,6 @@
 export default class Chatbox {
-    title: String;
-    description: String;
-    
+    title: string;
+    description: string;
+    maxPeople: string;
+    since: Date;
 }
