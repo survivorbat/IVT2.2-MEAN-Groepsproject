@@ -14,6 +14,12 @@ export class ChatresourceService implements ResourceInterface {
   getItems(): Observable<Resource[]> {
     return this.http.get<Resource[]>(BASE_URL)
   }
+  deleteItem(item: Resource): void {
+    this.http.delete(BASE_URL+'/'+item.title)
+  }
+  addItem(item: Resource): void {
+    this.http.post(BASE_URL, item)
+  }
   constructor(private http: HttpClient) { }
 
 }
