@@ -1,5 +1,5 @@
 export default class Resource {
-    id: Number;
-    title: String;
-    description: String;
+    id: number;
+    title: string;
+    description: string;
 }
