@@ -7,6 +7,8 @@ router.options(/\/api*/, (req,res) => {
 
 const chatboxroutes = require('./routes/chatbox_routes');
 router.use('/api/chatboxes',chatboxroutes);
+const chatresources = require('./routes/chatresource_routes');
+router.use('/api/chatresources',chatresources);
 
 router.use((error,req,res,next) => {
 	res.status(error.status || 500).send({

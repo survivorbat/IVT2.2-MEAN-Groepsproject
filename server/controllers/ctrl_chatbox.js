@@ -31,7 +31,7 @@ module.exports = {
         const new_query = "MATCH (chatbox:chatbox {name:$name}) SET chatbox.name=$name, chatbox.maxPeople=$maxPeople"
         session.run(new_query,params)
             .then((result) => {
-                res.status(201).json(result)
+                res.status(200).json(result)
             })
             .catch(next)
     },
