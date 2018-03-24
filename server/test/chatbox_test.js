@@ -36,7 +36,7 @@ describe('Chatbox API interface', () => {
             .end((err, res) => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
-                testID = res.body.filter(item => item.name === 'TEST')[0].id
+                testID = res.body.filter(item => item.name === 'TEST')[0].name
                 done()
             })
     })
