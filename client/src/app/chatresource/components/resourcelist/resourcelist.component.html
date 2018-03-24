@@ -1,0 +1,10 @@
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="resource of resources">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{resource.title}}</h5>
+      <small>{{resource.since}}</small>
+    </div>
+    <p class="mb-1">{{resource.description}}</p>
+    <small><a href="{{resource.url}}">{{resource.url}}</a></small>
+  </li>
+</ul>
