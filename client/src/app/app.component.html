@@ -1,10 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">Wogema</a>
+  <div class="">
+    <button type="button" class="btn btn-outline-secondary d-md-none" (click)="showChatlist=!showChatlist;">Chat ruimtes</button>
+    <button type="button" class="btn btn-outline-secondary">?</button>
+  </div>
 </nav>
 <div class="row container-fluid content">
-  <div class="d-md-none col-md-12">
-    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" (click)="showChatlist=!showChatlist;">Chat ruimtes</button>
-  </div>
   <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
     <ul class="list-group">
       <li class="list-group-item list-group-item-action">Algemeen</li>
