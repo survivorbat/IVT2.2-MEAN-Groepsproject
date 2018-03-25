@@ -3,16 +3,17 @@
   <div class="d-md-none col-md-12">
     <button type="button" class="btn btn-outline-secondary btn-lg btn-block" (click)="showChatlist=!showChatlist;">Chat ruimtes</button>
   </div>
-  <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist == false }">
+  <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
     <ul class="list-group">
       <li class="list-group-item list-group-item-action">Algemeen</li>
-      <li class="list-group-item list-group-item-action">Linux</li>
+      <li class="list-group-item list-group-item-action active">Linux</li>
       <li class="list-group-item list-group-item-action">Ov group</li>
       <li class="list-group-item list-group-item-action">Bioscoop fans</li>
       <li class="list-group-item list-group-item-action">Soorten zoekers</li>
+      <li class="list-group-item list-group-item-action">Algemeen</li>
     </ul>
   </div>
-  <div class="col-md-10 chatBox">
+  <div class="col-md-10 chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
     <div *ngFor="let hero of emptyArray" class="chatItem">
 
       <div class="row">
