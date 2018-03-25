@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { ChatboxModule } from './chatbox/chatbox.module';
 import { ChatmessageModule } from './chatmessage/chatmessage.module';
 import { ChatresourceModule } from './chatresource/chatresource.module';
-import { UiModule } from './ui/ui.module';
 
 
 @NgModule({
@@ -17,8 +16,7 @@ import { UiModule } from './ui/ui.module';
     BrowserModule,
     ChatboxModule,
     ChatmessageModule,
-    ChatresourceModule,
-    UiModule
+    ChatresourceModule
   ],
   providers: [],
   bootstrap: [AppComponent]
