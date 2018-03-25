@@ -8,7 +8,30 @@
       Overzicht met chatboxxen
     </div>
     <div class="col-md-10">
-      Chatbox komt hier
+      <div *ngFor="let hero of emptyArray" class="chatItem">
+
+        <div class="row">
+          <div class="col-auto">
+            <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=n" class="avatar">
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col-12">
+                <b>Gerben Droogers</b> <i>10:00</i>
+              </div>
+              <div class="col-12">
+                Bericht
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-2">&#9998;</button>
+            <button type="submit" class="btn btn-danger mb-2">&#10799;</button>
+          </div>
+        </div>
+
+      </div>
+
       <div class="chatBar">
         <div class="form-row">
           <div class="col">

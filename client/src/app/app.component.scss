@@ -1,5 +1,6 @@
 .content {
   padding-top: 5rem;
+  padding-bottom: 30px;
 }
 
 .chatBar {
@@ -7,4 +8,17 @@
   bottom: 6px;
   left: 10px;
   right: 10px;
+}
+
+.chatItem {
+  margin: 5px;
+}
+
+.chatItem:hover {
+    background-color: #f0f0f0;
+}
+
+.avatar {
+  width: 50px;
+  border-radius: 5px;
 }
