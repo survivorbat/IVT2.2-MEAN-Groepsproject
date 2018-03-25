@@ -1,7 +1,10 @@
 <app-header></app-header>
 <div class="container-fluid content">
   <div class="row">
-    <div class="col-md-2">
+    <div class="d-md-none">
+      <button type="button" class="btn btn-primary" (click)="showChatlist=!showChatlist;">Chat ruimtes</button>
+    </div>
+    <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist == false }">
       Overzicht met chatboxxen
     </div>
     <div class="col-md-10">
