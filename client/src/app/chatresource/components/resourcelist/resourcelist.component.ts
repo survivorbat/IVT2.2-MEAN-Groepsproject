@@ -39,4 +39,8 @@ export class ResourcelistComponent implements OnInit {
     this.chatresourceservice.getItems().subscribe(res => this.resources=res, err => this.error="Error bij het ophalen van resources")
   }
 
+  deleteResource(title: string){
+    this.chatresourceservice.deleteItem(title);
+  }
+
 }
