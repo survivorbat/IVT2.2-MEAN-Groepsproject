@@ -1,48 +1,45 @@
 <app-header></app-header>
-<div class="container-fluid content">
-  <div class="row">
-    <div class="d-md-none">
-      <button type="button" class="btn btn-primary" (click)="showChatlist=!showChatlist;">Chat ruimtes</button>
-    </div>
-    <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist == false }">
-      Overzicht met chatboxxen
-    </div>
-    <div class="col-md-10">
-      <div *ngFor="let hero of emptyArray" class="chatItem">
+<div class="row container-fluid content">
+  <div class="d-md-none">
+    <button type="button" class="btn btn-primary" (click)="showChatlist=!showChatlist;">Chat ruimtes</button>
+  </div>
+  <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist == false }">
+    Overzicht met chatboxxen
+  </div>
+  <div class="col-md-10 chatBox">
+    <div *ngFor="let hero of emptyArray" class="chatItem">
 
-        <div class="row">
-          <div class="col-auto">
-            <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=n" class="avatar">
-          </div>
-          <div class="col">
-            <div class="row">
-              <div class="col-12">
-                <b>Gerben Droogers</b> <i>10:00</i>
-              </div>
-              <div class="col-12">
-                Bericht
-              </div>
+      <div class="row">
+        <div class="col-auto">
+          <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=n" class="avatar">
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-12">
+              <b>Gerben Droogers</b> <i>10:00</i>
+            </div>
+            <div class="col-12">
+              Bericht
             </div>
           </div>
-          <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-2">&#9998;</button>
-            <button type="submit" class="btn btn-danger mb-2">&#10799;</button>
-          </div>
         </div>
-
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-2">&#9998;</button>
+          <button type="submit" class="btn btn-danger mb-2">&#10799;</button>
+        </div>
       </div>
 
-      <div class="chatBar">
-        <div class="form-row">
-          <div class="col">
-            <input type="text" class="form-control" placeholder="Type hier een chat bericht">
-          </div>
-          <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-2">Stuur</button>
-          </div>
+    </div>
+
+    <div class="chatBar">
+      <div class="form-row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Type hier een chat bericht">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-2">Stuur</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<app-footer></app-footer>
