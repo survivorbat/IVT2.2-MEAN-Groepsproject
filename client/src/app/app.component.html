@@ -7,14 +7,7 @@
 </nav>
 <div class="row container-fluid content">
   <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-action">Algemeen</li>
-      <li class="list-group-item list-group-item-action active">Linux</li>
-      <li class="list-group-item list-group-item-action">Ov group</li>
-      <li class="list-group-item list-group-item-action">Bioscoop fans</li>
-      <li class="list-group-item list-group-item-action">Soorten zoekers</li>
-      <li class="list-group-item list-group-item-action">Algemeen</li>
-    </ul>
+    <app-chatboxlist></app-chatboxlist>
   </div>
   <div class="col-md-10 chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
     <div *ngFor="let hero of emptyArray" class="chatItem">
