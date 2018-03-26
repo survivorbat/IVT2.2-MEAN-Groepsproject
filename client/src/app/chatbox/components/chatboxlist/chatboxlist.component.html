@@ -1,8 +1,3 @@
 <ul class="list-group">
-  <li class="list-group-item list-group-item-action">Algemeen</li>
-  <li class="list-group-item list-group-item-action active">Linux</li>
-  <li class="list-group-item list-group-item-action">Ov group</li>
-  <li class="list-group-item list-group-item-action">Bioscoop fans</li>
-  <li class="list-group-item list-group-item-action">Soorten zoekers</li>
-  <li class="list-group-item list-group-item-action">Algemeen</li>
+  <li class="list-group-item list-group-item-action" *ngFor="let chatbox of chatboxes">{{chatbox.name}}</li>
 </ul>
