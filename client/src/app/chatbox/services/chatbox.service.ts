@@ -12,6 +12,10 @@ export class ChatboxService {
   getItems(): Observable<Chatbox[]> {
     return this.http.get<Chatbox[]>(BASE_URL)
   }
+  updateItem(item: Chatbox): Observable<any> {
+    const url = `${BASE_URL}/${item.id}`;
+    return this.http.patch(url, item);
+  }
   addItem(item: Chatbox): Observable<Chatbox> {
     return this.http.post<Chatbox>(BASE_URL, item)
   }
