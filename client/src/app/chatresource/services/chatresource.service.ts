@@ -3,8 +3,9 @@ import ResourceInterface from '../ResourceInterface';
 import Resource from '../domain/Resource';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
-const BASE_URL = "https://groepsprojectivt2.herokuapp.com/api/chatresources"
+const BASE_URL = environment.serverurl + "/api/chatresources"
 @Injectable()
 export class ChatresourceService implements ResourceInterface {
 

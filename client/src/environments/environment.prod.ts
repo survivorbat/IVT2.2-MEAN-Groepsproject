@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  serverurl: 'https://groepsprojectivt2.herokuapp.com'
 };

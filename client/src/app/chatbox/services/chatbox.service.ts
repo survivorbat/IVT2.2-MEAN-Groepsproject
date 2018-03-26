@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import Chatbox from '../domain/Chatbox';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
-const BASE_URL = "http://localhost:5000/api/chatboxes"
+const BASE_URL = environment.serverurl + "/api/chatboxes"
 @Injectable()
 export class ChatboxService {
 
