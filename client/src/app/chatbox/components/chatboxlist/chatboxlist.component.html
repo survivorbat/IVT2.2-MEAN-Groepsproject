@@ -1,3 +1,7 @@
 <ul class="list-group">
   <li class="list-group-item list-group-item-action" *ngFor="let chatbox of chatboxes">{{chatbox.name}}</li>
+  <li class="list-group-item list-group-item-action list-group-item-primary">
+    <div (click)="showCreateNew = true;" [ngClass]="{ 'hidden': showCreateNew !== false }">Nieuwe groep</div>
+    <input (keyup.enter)="storeChatbox();" [(ngModel)]="newBox.name" class="form-control" [ngClass]="{ 'hidden': showCreateNew === false }">
+  </li>
 </ul>

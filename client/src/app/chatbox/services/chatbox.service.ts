@@ -11,5 +11,8 @@ export class ChatboxService {
   getItems(): Observable<Chatbox[]> {
     return this.http.get<Chatbox[]>(BASE_URL)
   }
+  addItem(item: Chatbox): void {
+    return this.http.post<Chatbox>(BASE_URL, item)
+  }
 
 }

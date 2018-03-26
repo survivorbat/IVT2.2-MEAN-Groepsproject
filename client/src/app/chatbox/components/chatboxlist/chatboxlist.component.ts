@@ -11,6 +11,13 @@ export class ChatboxlistComponent implements OnInit {
 
   private chatboxes: Chatbox[];
   private error: string;
+  showCreateNew = false;
+  newBox: Chatbox = {
+    name: 'test',
+    description: 'de',
+    maxPeople: 0,
+    since: null
+  };
 
   constructor(private chatboxService: ChatboxService) { }
 
@@ -19,10 +26,14 @@ export class ChatboxlistComponent implements OnInit {
   }
 
   public get Chatboxes(): Chatbox[] {
-		return this.chatboxes;
-	}
+    return this.chatboxes;
+  }
 
   getChatboxes(): void{
-    this.chatboxService.getItems().subscribe(res => this.chatboxes=res, err => this.error="Error bij het ophalen van resources")
+    this.chatboxService.getItems().subscribe(res => this.chatboxes=res, err => this.error="Error bij het ophalen van de chat groepen");
+  }
+  storeChatbox(): void {
+    this.showCreateNew = false;
+    this.chatboxService.addItem(this.newBox).subscribe(res => this.getChatboxes(), err => this.error="Error bij het ophalen van de chat groepen");
   }
 }
