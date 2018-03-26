@@ -36,8 +36,8 @@ module.exports = {
             .catch(next)
     },
     delete(req,res,next){
-        const params = {name: req.params.id}
-        const new_query = "MATCH (n:chatbox {name:$name}) DETACH DELETE (n)"
+        const params = {id: parseInt(req.params.id)}
+        const new_query = "MATCH (n:chatbox) WHERE id(n)= $id OPTIONAL MATCH (n)-[r]-() DELETE r,n"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)
@@ -52,8 +52,8 @@ const transformIntegers = function(result) {
         result.forEach((row, i)=>  {
             Object.keys(row).forEach((val, j) => {
 
-                row[val] = neo4j.isInt(row[val]) 
-                ? (neo4j.integer.inSafeRange(row[val]) ? row[val].toNumber() : row[val].toString()) 
+                row[val] = neo4j.isInt(row[val])
+                ? (neo4j.integer.inSafeRange(row[val]) ? row[val].toNumber() : row[val].toString())
                 : row[val];
             })
         })
