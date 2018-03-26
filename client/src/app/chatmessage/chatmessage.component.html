@@ -1,0 +1,16 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+<script>
+  angular.module('app', [])
+  .controller('MainCtrl', function ($scope) {
+  
+    $scope.$watch('message', function (now, old) {
+      if (now == "/film") {
+        console.log("kaas");
+        //TODO: call some function, perhaps some visual feedback?
+      }
+    });
+  });
+</script>
+<div ng-app='app' ng-controller='MainCtrl'>
+  <input type="text" ng-model="message">  
+</div>
