@@ -7,14 +7,7 @@
 </nav>
 <div class="row container-fluid content">
   <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-action">Algemeen</li>
-      <li class="list-group-item list-group-item-action active">Linux</li>
-      <li class="list-group-item list-group-item-action">Ov group</li>
-      <li class="list-group-item list-group-item-action">Bioscoop fans</li>
-      <li class="list-group-item list-group-item-action">Soorten zoekers</li>
-      <li class="list-group-item list-group-item-action">Algemeen</li>
-    </ul>
+    <app-chatboxlist></app-chatboxlist>
   </div>
   <div class="col-md-10 chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
     <div *ngFor="let hero of emptyArray" class="chatItem">
@@ -34,8 +27,8 @@
           </div>
         </div>
         <div class="col-auto">
-          <button type="submit" class="btn btn-primary btn-sm">&#9998;</button>
-          <button type="submit" class="btn btn-danger btn-sm">&#10799;</button>
+          <button type="submit" class="btn btn-outline-primary btn-sm">&#9998;</button>
+          <button type="submit" class="btn btn-outline-danger btn-sm">&#10799;</button>
         </div>
       </div>
 
@@ -47,7 +40,7 @@
           <input type="text" class="form-control" placeholder="Type hier een chat bericht">
         </div>
         <div class="col-auto">
-          <button type="submit" class="btn btn-primary mb-2">Stuur</button>
+          <button type="submit" class="btn btn-outline-primary mb-2">Stuur</button>
         </div>
       </div>
     </div>

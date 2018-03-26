@@ -1,0 +1,17 @@
+<ul class="list-group">
+  <li class="list-group-item list-group-item-action" *ngFor="let chatbox of chatboxes">
+    <div class="row">
+      <div class="col">
+        {{chatbox.name}}
+      </div>
+      <div class="col-auto">
+        <button (click)="showCreateNew = true;" type="submit" class="btn btn-outline-primary btn-sm">&#9998;</button>
+        <button (click)="destroyChatbox(chatbox);" type="submit" class="btn btn-outline-danger btn-sm">&#10799;</button>
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item list-group-item-action list-group-item-primary">
+    <div (click)="showCreateNew = true;" [ngClass]="{ 'hidden': showCreateNew !== false }">Nieuwe groep</div>
+    <input (keyup.enter)="storeChatbox();" [(ngModel)]="newBox.name" class="form-control" [ngClass]="{ 'hidden': showCreateNew === false }">
+  </li>
+</ul>
