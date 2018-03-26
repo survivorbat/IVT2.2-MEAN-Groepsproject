@@ -13,9 +13,10 @@ export class ChatboxlistComponent implements OnInit {
   private error: string;
   showCreateNew = false;
   newBox: Chatbox = {
+    id: null,
     name: 'test',
     description: 'de',
-    maxPeople: 0,
+    maxPeople: '0',
     since: null
   };
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import Chatbox from '../../domain/Chatbox';
+import Chatbox from '../domain/Chatbox';
+import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
 const BASE_URL = "http://localhost:5000/api/chatboxes"
@@ -15,7 +16,7 @@ export class ChatboxService {
     return this.http.post<Chatbox>(BASE_URL, item)
   }
   deleteItem(item: Chatbox | number): Observable<Chatbox> {
-    const id = typeof item === 'string' ? item : item.id;
+    const id = typeof item === 'number' ? item : item.id;
     const url = `${BASE_URL}/${id}`;
 
     return this.http.delete<Chatbox>(url);
