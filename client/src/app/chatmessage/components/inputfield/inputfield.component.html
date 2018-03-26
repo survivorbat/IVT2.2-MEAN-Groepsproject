@@ -1,1 +1,3 @@
-<input type="text" [(ngModel)]="message.message">
+<input type="text" [(ngModel)]="inputfield" (change)="checkMessage()" placeholder="Type hier een chat berichty">
+
+<p>Value: {{inputfield}}</p>
