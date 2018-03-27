@@ -18,4 +18,9 @@ export class PrivateComponent implements OnInit {
     }
   }
 
+  logOut(): void {
+    window.localStorage.removeItem('API_TOKEN')
+    this.router.navigateByUrl('/login')
+  }
+
 }
