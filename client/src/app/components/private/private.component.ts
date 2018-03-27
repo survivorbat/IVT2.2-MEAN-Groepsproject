@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./private.component.scss']
 })
 export class PrivateComponent implements OnInit {
+  showChatlist = false;
+  emptyArray = new Array(45);
 
   constructor() { }
 

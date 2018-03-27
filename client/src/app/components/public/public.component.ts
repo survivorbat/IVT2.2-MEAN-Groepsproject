@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./public.component.scss']
 })
 export class PublicComponent implements OnInit {
-  showChatlist = false;
-  emptyArray = new Array(45);
 
   constructor() { }
 
