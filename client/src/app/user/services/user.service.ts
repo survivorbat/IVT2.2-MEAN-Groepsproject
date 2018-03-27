@@ -17,8 +17,8 @@ export class UserService {
     });
   }
 
-  addUser(user: User): any {
-    return this.http.post(this.URL, user);
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(this.URL, user);
   }
 
   checkUser(user: User): any {

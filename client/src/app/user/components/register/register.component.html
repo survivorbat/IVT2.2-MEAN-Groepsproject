@@ -1,10 +1,8 @@
 <div class="row justify-content-center">
   <div class="col-lg-4">
-    <form class="form-signin">
-      <h1 class="h3 mb-3 font-weight-normal">Registreer</h1>
-      <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" required autofocus>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" required>
-      <button class="btn btn-lg btn-success btn-block" type="submit">Registreer</button>
-    </form>
+    <h1 class="h3 mb-3 font-weight-normal">Registreer</h1>
+    <input type="text" class="form-control" placeholder="Gebruikersnaam" [(ngModel)]="user.username" required autofocus>
+    <input type="password" id="inputPassword" class="form-control" [(ngModel)]="user.password" placeholder="Wachtwoord" required>
+    <button (click)="register()" class="btn btn-lg btn-success btn-block" type="submit">Registreer</button>
   </div>
 </div>
