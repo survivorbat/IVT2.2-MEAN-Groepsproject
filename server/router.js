@@ -10,6 +10,9 @@ router.use('/api/chatboxes',chatboxroutes);
 const chatresources = require('./routes/chatresource_routes');
 router.use('/api/chatresources',chatresources);
 
+const chatmessageRoutes = require('./routes/chatmsg_routes');
+router.use('/api/chatmessage', chatmessageRoutes);
+
 router.use((error,req,res,next) => {
 	res.status(error.status || 500).send({
         message: error.message,
