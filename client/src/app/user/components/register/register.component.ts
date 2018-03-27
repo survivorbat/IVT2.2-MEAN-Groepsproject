@@ -13,8 +13,8 @@ export class RegisterComponent implements OnInit {
   public error: string;
   public user: User = {
     id: null,
-    username: 'asdf',
-    password: 'asdf'
+    username: '',
+    password: ''
   };
 
   constructor(private userService: UserService, private router: Router) { }
@@ -23,8 +23,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    // this.user.username = ' tests tdsf ';
-    this.userService.addUser(this.user).subscribe(res => this.router.navigateByUrl('/m'), err => this.error=err.error);
+    this.userService.addUser(this.user).subscribe(res => this.router.navigateByUrl('/login'), err => this.error=err.error);
   }
 
 }
