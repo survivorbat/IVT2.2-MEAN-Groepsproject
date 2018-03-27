@@ -12,7 +12,7 @@ module.exports = {
             .catch(next)
     },
     add(req,res,next){
-        if(req.body.name===undefined || req.body.maxPeople===undefined || req.body.description===undefined){
+        if(req.body.name===undefined || req.body.description===undefined){
             return res.status(422).json({"result":"Required body parameters are: name, maxPeople, description"})
         }
         const params = {name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
@@ -24,7 +24,7 @@ module.exports = {
             .catch(next)
     },
     update(req,res,next){
-        if(req.body.name === undefined || req.body.maxPeople===undefined || req.body.description===undefined){
+        if(req.body.name === undefined || req.body.description===undefined){
             return res.status(422).json({"result":"Required body parameters are: name, maxPeople"})
         }
         const params = {id: parseInt(req.params.id), name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}

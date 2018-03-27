@@ -9,6 +9,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  showChatlist = false;
-  emptyArray = new Array(45);
 }
