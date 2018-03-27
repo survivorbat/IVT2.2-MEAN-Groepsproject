@@ -10,32 +10,16 @@ const BASE_URL = environment.serverurl + "/api/chatresources"
 export class ChatresourceService implements ResourceInterface {
 
   getItem(item: Resource): Observable<Resource> {
-    return this.http.get<Resource>(BASE_URL+'/'+item.title, {
-      headers: {
-        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
-      }
-    });
+    return this.http.get<Resource>(BASE_URL+'/'+item.title)
   }
   getItems(): Observable<Resource[]> {
-    return this.http.get<Resource[]>(BASE_URL, {
-      headers: {
-        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
-      }
-    });
+    return this.http.get<Resource[]>(BASE_URL)
   }
   deleteItem(title: string): void {
-    this.http.delete(BASE_URL+'/'+title, {
-      headers: {
-        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
-      }
-    });
+    this.http.delete(BASE_URL+'/'+title)
   }
   addItem(item: Resource): void {
-    this.http.post(BASE_URL, item, {
-      headers: {
-        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
-      }
-    });
+    this.http.post(BASE_URL, item)
   }
   constructor(private http: HttpClient) { }
 
