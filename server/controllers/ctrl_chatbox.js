@@ -2,7 +2,7 @@ const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (u:chatbox) RETURN {id: ID(u), name: u.name, maxPeople: u.maxPeople, since: u.since, description: u.description} as chatbox"
+        const query = "MATCH (u:chatbox) RETURN {id: ID(u), name: u.name, since: u.since, description: u.description} as chatbox"
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
             .then(transformIntegers)
@@ -16,7 +16,7 @@ module.exports = {
             return res.status(422).json({"result":"Required body parameters are: name, maxPeople, description"})
         }
         const params = {name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "CREATE (u:chatbox {name:$name,description:$description,maxPeople:$maxPeople, since: timestamp()})"
+        const new_query = "CREATE (u:chatbox {name:$name,description:$description, since: timestamp()})"
         session.run(new_query,params)
             .then((result) => {
                 res.status(201).json(result)
@@ -28,7 +28,7 @@ module.exports = {
             return res.status(422).json({"result":"Required body parameters are: name, maxPeople"})
         }
         const params = {id: parseInt(req.params.id), name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "MATCH (chatbox:chatbox) WHERE id(chatbox)= $id SET chatbox.name=$name, chatbox.maxPeople=$maxPeople, chatbox.description = $description"
+        const new_query = "MATCH (chatbox:chatbox) WHERE id(chatbox)= $id SET chatbox.name=$name, chatbox.description = $description"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)

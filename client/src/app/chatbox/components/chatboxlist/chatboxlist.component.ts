@@ -16,7 +16,6 @@ export class ChatboxlistComponent implements OnInit {
     id: null,
     name: 'test',
     description: 'de',
-    maxPeople: '0',
     since: null
   };
 
