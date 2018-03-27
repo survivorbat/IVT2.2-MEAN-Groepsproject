@@ -4,6 +4,7 @@ import { FilmService } from '../../../chatresource/services/film.service';
 import Resource from '../../../chatresource/domain/Resource';
 
 import Message from '../../domain/Message';
+import ResourceInterface from '../../../chatresource/ResourceInterface';
 
 @Component({
   selector: 'app-inputfield',
@@ -11,23 +12,45 @@ import Message from '../../domain/Message';
   styleUrls: ['./inputfield.component.scss']
 })
 export class InputfieldComponent implements OnInit {
-  private resources: Resource[];
-  private message: Message;
+  resources: Resource[];
+  message: Message;
+  private services: ResourceInterface[];
+  private suggestion: string;
   
-  constructor(private filmservice: FilmService) { }
+  constructor(private filmservice: FilmService) {
+    this.message=new Message();
+    this.services=new Array<ResourceInterface>();
+    this.services.push(this.filmservice);
+  }
 
   ngOnInit() {
-
+    
   }
     
   checkMessage() {
-      //check message on filmService
-    this.filmservice.getItems().subscribe(res=> {
-        console.log("Getting movies...");
-      //this.resources=res.map(item=> {
-      //    console.log("cheese");
-      //})
-    })
+    if(this.message.message.startsWith('/film ') && this.message.message.trim().substring(6).length>2){
+      this.suggestion="Laden...";
+      this.services[0].getItems().subscribe((res: Resource[])=> {
+        this.resources=res.filter(item => item.title.toLowerCase().indexOf(this.message.message.substring(6).toLowerCase())>-1 || item.description.toLowerCase().indexOf(this.message.message.substring(6).toLowerCase())>-1);
+        if(this.resources.length===0){
+          let emptyResource = new Resource();
+          emptyResource.title="Niks gevonden...";
+          this.resources.push(emptyResource);
+        }
+      })
+    } else {
+      this.resources=[];
+    }
+    // if(this.message.message.startsWith('/ov ')){
+    //   this.filmservice.getItems().subscribe((res: Resource[])=> {
+    //     this.resources=res;
+    //   })
+    // }
+    // if(this.message.message.startsWith('/zandkorrel ')){
+    //   this.filmservice.getItems().subscribe((res: Resource[])=> {
+    //     this.resources=res;
+    //   })
+    // }
   }
 
 }
