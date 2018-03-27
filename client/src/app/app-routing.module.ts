@@ -7,8 +7,8 @@ import { PrivateComponent } from './components/private/private.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'm', component: PublicComponent },
-  { path: '', component: PrivateComponent },
+  { path: 'm', component: PrivateComponent },
+  { path: '', component: PublicComponent },
 ];
 
 @NgModule({
