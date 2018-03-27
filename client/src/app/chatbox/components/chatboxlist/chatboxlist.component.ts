@@ -9,7 +9,7 @@ import Chatbox from '../../domain/Chatbox';
 })
 export class ChatboxlistComponent implements OnInit {
 
-  private chatboxes: Chatbox[];
+  chatboxes: Chatbox[];
   private error: string;
   showCreateNew = false;
   newBox: Chatbox = {
