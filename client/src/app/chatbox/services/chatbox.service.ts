@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Authorization-Type': 'Bearer '+window.localStorage.getItem('API_TOKEN') })
+  headers: new HttpHeaders({ 'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN') })
 };
 
 const BASE_URL = environment.serverurl + "/api/chatboxes"
