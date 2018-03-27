@@ -23,7 +23,7 @@ export class InputfieldComponent implements OnInit {
   checkMessage() {
       //check message on filmService
     this.filmservice.getItems().subscribe(res=> {
-        console.log("cheese");
+        console.log("Getting movies...");
       //this.resources=res.map(item=> {
       //    console.log("cheese");
       //})
