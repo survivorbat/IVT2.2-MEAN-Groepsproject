@@ -9,10 +9,18 @@ const BASE_URL = "https://avancinemalite.herokuapp.com/api/films"
 @Injectable()
 export class FilmService implements ResourceInterface {
   getItem(item: Resource): Observable<Resource> {
-    return this.http.get<Resource>(BASE_URL+'/'+item.id)
+    return this.http.get<Resource>(BASE_URL+'/'+item.id, {
+      headers: {
+        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
+      }
+    });
   }
   getItems(): Observable<Resource[]> {
-   return this.http.get<Resource[]>(BASE_URL)
+   return this.http.get<Resource[]>(BASE_URL, {
+    headers: {
+      'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
+    }
+  });
   }
   constructor(private http: HttpClient) { }
 
