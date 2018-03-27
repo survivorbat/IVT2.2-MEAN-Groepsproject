@@ -27,8 +27,8 @@ module.exports = {
         if(req.body.name === undefined || req.body.maxPeople===undefined || req.body.description===undefined){
             return res.status(422).json({"result":"Required body parameters are: name, maxPeople"})
         }
-        const params = {name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "MATCH (chatbox:chatbox {name:$name}) SET chatbox.name=$name, chatbox.maxPeople=$maxPeople, chatbox.description = $description"
+        const params = {id: parseInt(req.params.id), name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
+        const new_query = "MATCH (chatbox:chatbox) WHERE id(chatbox)= $id SET chatbox.name=$name, chatbox.maxPeople=$maxPeople, chatbox.description = $description"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)

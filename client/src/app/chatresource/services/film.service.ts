@@ -3,8 +3,9 @@ import ResourceInterface from '../ResourceInterface'
 import Resource from '../domain/Resource'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
+import { environment } from '../../../environments/environment';
 
-const BASE_URL = "https://avancinema.herokuapp.com/api/films"
+const BASE_URL = environment.serverurl + "/api/films"
 @Injectable()
 export class FilmService implements ResourceInterface {
   getItem(item: Resource): Observable<Resource> {

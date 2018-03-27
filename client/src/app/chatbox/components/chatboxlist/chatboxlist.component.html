@@ -2,10 +2,11 @@
   <li class="list-group-item list-group-item-action" *ngFor="let chatbox of chatboxes">
     <div class="row">
       <div class="col">
-        {{chatbox.name}}
+        <div [ngClass]="{ 'hidden': chatbox.edit === false }">{{chatbox.name}}</div>
+        <input (keyup.enter)="updateChatbox(chatbox);" [(ngModel)]="chatbox.name" class="form-control" [ngClass]="{ 'hidden': chatbox.edit !== false }">
       </div>
-      <div class="col-auto">
-        <button (click)="showCreateNew = true;" type="submit" class="btn btn-outline-primary btn-sm">&#9998;</button>
+      <div class="col-auto" [ngClass]="{ 'hidden': chatbox.edit === false }">
+        <button (click)="chatbox.edit = false;" type="submit" class="btn btn-outline-primary btn-sm">&#9998;</button>
         <button (click)="destroyChatbox(chatbox);" type="submit" class="btn btn-outline-danger btn-sm">&#10799;</button>
       </div>
     </div>

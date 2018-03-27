@@ -37,9 +37,8 @@ export class ChatboxlistComponent implements OnInit {
     this.showCreateNew = false;
     this.chatboxService.addItem(this.newBox).subscribe(res => this.getChatboxes(), err => this.error="Error bij het ophalen van de chat groepen");
   }
-  updateChatbox(): void {
-    this.showCreateNew = false;
-    this.chatboxService.addItem(this.newBox).subscribe(res => this.getChatboxes(), err => this.error="Error bij het ophalen van de chat groepen");
+  updateChatbox(chatbox: Chatbox): void {
+    this.chatboxService.updateItem(chatbox).subscribe(res => this.getChatboxes(), err => this.error="Error bij het ophalen van de chat groepen");
   }
   destroyChatbox(chatbox: Chatbox): void{
     console.log(chatbox);
