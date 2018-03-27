@@ -24,8 +24,7 @@ export class RegisterComponent implements OnInit {
 
   register(): void {
     // this.user.username = ' tests tdsf ';
-    // this.router.navigateByUrl('/m');
-    this.userService.addUser(this.user).subscribe(res => console.log(res), err => this.error="Error bij het ophalen van de chat groepen");
+    this.userService.addUser(this.user).subscribe(res => this.router.navigateByUrl('/m'), err => this.error=err.error);
   }
 
 }

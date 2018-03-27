@@ -4,5 +4,6 @@
     <input type="text" class="form-control" placeholder="Gebruikersnaam" [(ngModel)]="user.username" required autofocus>
     <input type="password" id="inputPassword" class="form-control" [(ngModel)]="user.password" placeholder="Wachtwoord" required>
     <button (click)="register()" class="btn btn-lg btn-success btn-block" type="submit">Registreer</button>
+    <div *ngIf="error" class="alert alert-danger" role="alert">{{error.error}}</div>
   </div>
 </div>
