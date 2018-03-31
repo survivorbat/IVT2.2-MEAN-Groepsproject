@@ -5,6 +5,8 @@ import Resource from '../../../chatresource/domain/Resource';
 
 import Message from '../../domain/Message';
 import ResourceInterface from '../../../chatresource/ResourceInterface';
+import { MessageService } from '../../services/message.service';
+import Chatbox from '../../../chatbox/domain/Chatbox';
 
 @Component({
   selector: 'app-inputfield',
@@ -17,7 +19,7 @@ export class InputfieldComponent implements OnInit {
   private services: ResourceInterface[];
   private suggestion: string;
   
-  constructor(private filmservice: FilmService) {
+  constructor(private filmservice: FilmService, private messageservice: MessageService) {
     this.message=new Message();
     this.services=new Array<ResourceInterface>();
     this.services.push(this.filmservice);
@@ -41,16 +43,11 @@ export class InputfieldComponent implements OnInit {
     } else {
       this.resources=[];
     }
-    // if(this.message.message.startsWith('/ov ')){
-    //   this.filmservice.getItems().subscribe((res: Resource[])=> {
-    //     this.resources=res;
-    //   })
-    // }
-    // if(this.message.message.startsWith('/zandkorrel ')){
-    //   this.filmservice.getItems().subscribe((res: Resource[])=> {
-    //     this.resources=res;
-    //   })
-    // }
   }
-
+  submit(){
+    this.messageservice.add(this.message,new Chatbox)
+  }
+  loadMessages(){
+    this.messageservice.getMessages(new Chatbox())
+  }
 }
