@@ -27,7 +27,7 @@ const userroutes = require('./routes/user_routes');
 router.use('/api/users', userroutes)
 
 const chatmessageRoutes = require('./routes/chatmessage_routes');
-router.use('/api/chatmessage', chatmessageRoutes);
+router.use('/api/chatmessages', chatmessageRoutes);
 
 router.use((error,req,res,next) => {
 	res.status(error.status || 500).send({

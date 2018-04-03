@@ -1,0 +1,24 @@
+<div *ngFor="let message of chatmessages" class="chatItem">
+
+  <div class="row">
+    <div class="col-auto">
+      <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=n" class="avatar">
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-12">
+          <b>{{message.username}}</b>
+          <i>{{message.since}}</i>
+        </div>
+        <div class="col-12">
+          {{message.text}}
+        </div>
+      </div>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-outline-primary btn-sm">&#9998;</button>
+      <button type="submit" class="btn btn-outline-danger btn-sm">&#10799;</button>
+    </div>
+  </div>
+
+</div>

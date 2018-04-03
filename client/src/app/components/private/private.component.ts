@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 })
 export class PrivateComponent implements OnInit {
   showChatlist = false;
-  emptyArray = new Array(45);
 
   constructor(private router: Router) { }
 

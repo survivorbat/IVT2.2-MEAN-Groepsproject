@@ -1,5 +1,5 @@
 <form>
-        <input type="text" name="message" [(ngModel)]="message.message" (keyup)="checkMessage()" placeholder="Type hier een chat bericht" class="form-control">
+        <input type="text" name="message" [(ngModel)]="message.text" (keyup)="checkMessage()" placeholder="Type hier een chat bericht" class="form-control">
         <ul class="list-group">
                 <li class="list-group-item" *ngFor="let resource of resources">{{resource.title}}</li>
         </ul>

@@ -11,34 +11,11 @@
     <app-chatboxlist></app-chatboxlist>
   </div>
   <div class="col-md-10 chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
-    <div *ngFor="let hero of emptyArray" class="chatItem">
-
-      <div class="row">
-        <div class="col-auto">
-          <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=n" class="avatar">
-        </div>
-        <div class="col">
-          <div class="row">
-            <div class="col-12">
-              <b>Gerben Droogers</b> <i>10:00</i>
-            </div>
-            <div class="col-12">
-              Bericht
-            </div>
-          </div>
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-outline-primary btn-sm">&#9998;</button>
-          <button type="submit" class="btn btn-outline-danger btn-sm">&#10799;</button>
-        </div>
-      </div>
-
-    </div>
-
+    <app-chatarea></app-chatarea>
     <div class="chatBar">
       <div class="form-row">
         <div class="col">
-            <app-inputfield></app-inputfield>
+          <app-inputfield></app-inputfield>
         </div>
         <div class="col-auto">
           <button type="submit" class="btn btn-outline-primary mb-2">Stuur</button>

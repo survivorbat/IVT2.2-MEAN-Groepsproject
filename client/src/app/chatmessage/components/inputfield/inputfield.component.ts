@@ -30,10 +30,10 @@ export class InputfieldComponent implements OnInit {
   }
     
   checkMessage() {
-    if(this.message.message.startsWith('/film ') && this.message.message.trim().substring(6).length>2){
+    if(this.message.text.startsWith('/film ') && this.message.text.trim().substring(6).length>2){
       this.suggestion="Laden...";
       this.services[0].getItems().subscribe((res: Resource[])=> {
-        this.resources=res.filter(item => item.title.toLowerCase().indexOf(this.message.message.substring(6).toLowerCase())>-1 || item.description.toLowerCase().indexOf(this.message.message.substring(6).toLowerCase())>-1);
+        this.resources=res.filter(item => item.title.toLowerCase().indexOf(this.message.text.substring(6).toLowerCase())>-1 || item.description.toLowerCase().indexOf(this.message.text.substring(6).toLowerCase())>-1);
         if(this.resources.length===0){
           let emptyResource = new Resource();
           emptyResource.title="Niks gevonden...";
@@ -48,6 +48,6 @@ export class InputfieldComponent implements OnInit {
     this.messageservice.add(this.message,new Chatbox)
   }
   loadMessages(){
-    this.messageservice.getMessages(new Chatbox())
+    
   }
 }
