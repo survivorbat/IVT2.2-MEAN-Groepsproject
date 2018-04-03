@@ -2,7 +2,7 @@ const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (u:chatbox) RETURN {id: ID(u), name: u.name, maxPeople: u.maxPeople, since: u.since, description: u.description} as chatbox"
+        const query = "MATCH (m:chatmessage) RETURN {id: ID(m), by: m.by, text: m.text, since: m.since} as chatmessage"
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
             .then(transformIntegers)
