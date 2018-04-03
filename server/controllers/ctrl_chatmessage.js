@@ -12,11 +12,12 @@ module.exports = {
             .catch(next)
     },
     add(req,res,next){
-        if(req.body.name===undefined || req.body.maxPeople===undefined || req.body.description===undefined){
-            return res.status(422).json({"result":"Required body parameters are: name, maxPeople, description"})
+        console.log(req.body)
+        if(req.body.message===undefined){
+            return res.status(422).json({"result":"Please add text to your message"})
         }
-        const params = {name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "CREATE (u:chatbox {name:$name,description:$description,maxPeople:$maxPeople, since: timestamp()})"
+        const params = {text: req.body.message}
+        const new_query = "CREATE (m:chatmessage {text:$text, since: timestamp()})"
         session.run(new_query,params)
             .then((result) => {
                 res.status(201).json(result)
