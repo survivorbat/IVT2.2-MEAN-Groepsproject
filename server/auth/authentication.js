@@ -7,7 +7,6 @@ function encryptAuthToken(authlevel,userid){
 		exp: moment().add(2, 'hours').unix(),
 		iat: moment().unix(),
 		sub: {
-			authlevel: authlevel,
 			userid: userid
 		}
 	}

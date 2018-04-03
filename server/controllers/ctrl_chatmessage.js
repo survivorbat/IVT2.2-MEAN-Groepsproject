@@ -2,7 +2,7 @@ const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (u:chatbox) RETURN {id: ID(u), name: u.name, maxPeople: u.maxPeople, since: u.since, description: u.description} as chatbox"
+        const query = "MATCH (m:chatmessage) RETURN {id: ID(m), by: m.by, text: m.text, since: m.since} as chatmessage"
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
             .then(transformIntegers)
@@ -12,11 +12,11 @@ module.exports = {
             .catch(next)
     },
     add(req,res,next){
-        if(req.body.name===undefined || req.body.maxPeople===undefined || req.body.description===undefined){
-            return res.status(422).json({"result":"Required body parameters are: name, maxPeople, description"})
+        if(req.body.message===undefined, req.body.chatbox===undefined){
+            return res.status(422).json({"result":"Please add text and a chatbox to your message"})
         }
-        const params = {name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "CREATE (u:chatbox {name:$name,description:$description,maxPeople:$maxPeople, since: timestamp()})"
+        const params = {text: req.body.message, chatbox: req.body.chatbox, by: req.user.sub.userid}
+        const new_query = "MATCH (u:chatbox) WHERE ID(u)=$chatbox MATCH (user:user) WHERE ID(user)=$by CREATE (user)-[:POSTED]->(m:chatmessage {text:$text, since: timestamp()})"
         session.run(new_query,params)
             .then((result) => {
                 res.status(201).json(result)
@@ -37,7 +37,7 @@ module.exports = {
     },
     delete(req,res,next){
         const params = {id: parseInt(req.params.id)}
-        const new_query = "MATCH (n:chatbox) WHERE id(n)= $id OPTIONAL MATCH (n)-[r]-() DELETE r,n"
+        const new_query = "MATCH (n:chatmessage) WHERE id(n)= $id OPTIONAL MATCH (n)-[r]-() DELETE r,n"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)
