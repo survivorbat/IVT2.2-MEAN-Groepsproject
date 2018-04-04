@@ -1,8 +1,10 @@
+const moment = require('moment')
 const {session, neo4j} = require('../config/neodb')
+
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (m:chatmessage) MATCH(u:user)-[:POSTED]->(m) MATCH(chatbox:chatbox) RETURN {id: ID(m), username: u.username, userid: ID(u), text: m.text, since: m.since} as chatmessage"
+        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since} as chatmessage"
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
             .then(transformIntegers)
@@ -15,7 +17,7 @@ module.exports = {
         if(req.params.chatbox===undefined){
             return res.status(422).json({"result":"Please add text and a chatbox to your message"})
         }
-        const query = "MATCH(chatbox:chatbox) WHERE ID(chatbox)=$chatbox MATCH (m:chatmessage) WHERE (m)-[:POSTED_IN]->(chatbox) MATCH(u:user)-[:POSTED_IN]->(m) RETURN {id: ID(m), username: u.username, userid: ID(u), text: m.text, since: m.since} as chatmessage"
+        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) WHERE ID(chatbox) = $chatbox RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since} as chatmessage"
         const params = {chatbox: parseInt(req.params.chatbox)}
         session.run(query,params)
             .then(result => result.records.map(item => item._fields[0]))
@@ -31,7 +33,7 @@ module.exports = {
             return res.status(422).json({"result":"Please add text and a chatbox to your message"})
         }
         const params = {text: req.body.text, chatbox: parseInt(req.body.chatbox), by: req.user.sub.userid}
-        const new_query = "MATCH (u:chatbox) WHERE ID(u)=$chatbox MATCH (user:user) WHERE ID(user)=$by CREATE (user)-[:POSTED]->(m:chatmessage {text:$text, since: timestamp()})"
+        const new_query = "MATCH (u:chatbox) WHERE ID(u)=$chatbox MATCH (user:user) WHERE ID(user)=$by CREATE (user)-[:POSTED]->(m:chatmessage {text:$text, since: timestamp()})-[:POSTED_IN]->(u)"
         session.run(new_query,params)
             .then((result) => {
                 res.status(201).json(result)

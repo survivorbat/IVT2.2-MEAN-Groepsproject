@@ -10,7 +10,7 @@ import { RegisterComponent } from './user/components/register/register.component
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'm', redirectTo:'m/1'},
+  { path: 'm', redirectTo:'m/0'},
   { path: 'm/:chatboxid', component: PrivateComponent},
   { path: '', component: PublicComponent,
     children: [

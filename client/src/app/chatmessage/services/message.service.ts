@@ -19,12 +19,12 @@ export class MessageService {
     });
   }
 
-  add(message: Message, chatbox: Chatbox){
-    this.http.post(BASE_URL+'/'+chatbox.id,{text: message.text, chatbox: chatbox.id},{
+  add(message: Message, chatbox: number){
+    this.http.post(BASE_URL,{text: message.text, chatbox: chatbox},{
       headers: {
         'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
       }
-    })
+    }).subscribe(res => console.log(res))
   }
 
   remove(message: Message){

@@ -7,6 +7,7 @@ import Message from '../../domain/Message';
 import ResourceInterface from '../../../chatresource/ResourceInterface';
 import { MessageService } from '../../services/message.service';
 import Chatbox from '../../../chatbox/domain/Chatbox';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inputfield',
@@ -18,15 +19,16 @@ export class InputfieldComponent implements OnInit {
   message: Message;
   private services: ResourceInterface[];
   private suggestion: string;
+  private chatbox: number;
   
-  constructor(private filmservice: FilmService, private messageservice: MessageService) {
+  constructor(private filmservice: FilmService, private messageservice: MessageService, private route:ActivatedRoute) {
     this.message=new Message();
     this.services=new Array<ResourceInterface>();
     this.services.push(this.filmservice);
   }
 
   ngOnInit() {
-    
+    this.route.params.subscribe((params) => this.chatbox=params.chatboxid)
   }
     
   checkMessage() {
@@ -45,9 +47,7 @@ export class InputfieldComponent implements OnInit {
     }
   }
   submit(){
-    this.messageservice.add(this.message,new Chatbox)
-  }
-  loadMessages(){
-    
+    this.messageservice.add(this.message,this.chatbox)
+    this.message= new Message()
   }
 }

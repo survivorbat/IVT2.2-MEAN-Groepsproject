@@ -2,7 +2,7 @@
   <li class="list-group-item list-group-item-action" *ngFor="let chatbox of chatboxes">
     <div class="row">
       <div class="col">
-        <div [ngClass]="{ 'hidden': chatbox.edit === false }">{{chatbox.name}}</div>
+        <div [ngClass]="{ 'hidden': chatbox.edit === false }"><a routerLink="{{'/m/'+chatbox.id}}">{{chatbox.name}}</a></div>
         <input (keyup.enter)="updateChatbox(chatbox);" [(ngModel)]="chatbox.name" class="form-control" [ngClass]="{ 'hidden': chatbox.edit !== false }">
       </div>
       <div class="col-auto" [ngClass]="{ 'hidden': chatbox.edit === false }">

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService } from '../../services/message.service';
-import Message from '../../domain/Message';
-import { ActivatedRoute, Params } from '@angular/router';
-import Chatbox from '../../../chatbox/domain/Chatbox';
+import { Component, OnInit } from '@angular/core'
+import { MessageService } from '../../services/message.service'
+import Message from '../../domain/Message'
+import { ActivatedRoute, Params } from '@angular/router'
+import Chatbox from '../../../chatbox/domain/Chatbox'
 
 @Component({
   selector: 'app-chatarea',
@@ -10,17 +10,19 @@ import Chatbox from '../../../chatbox/domain/Chatbox';
   styleUrls: ['./chatarea.component.scss']
 })
 export class ChatareaComponent implements OnInit {
-  chatmessages: Message[];
+  chatmessages: Message[]
+  private interval
   constructor(private chatmessageservice: MessageService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.getMessages(parseInt(params.chatboxid))
+      clearInterval(this.interval)
+      this.interval = window.setInterval(() => this.getMessages(parseInt(params.chatboxid)),1000)
     })
   }
 
   getMessages(chatbox: number){
-    this.chatmessageservice.getMessages(chatbox).subscribe(res => {this.chatmessages=res}, err => {})
+    this.chatmessageservice.getMessages(chatbox).subscribe(res => {this.chatmessages=res.reverse()}, err => {})
   }
 
 }
