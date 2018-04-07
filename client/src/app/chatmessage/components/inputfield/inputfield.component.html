@@ -7,6 +7,6 @@
                 <button type="submit" class="btn btn-outline-primary mb-2" (click)="submit()">Stuur</button>
         </div>
         <ul class="list-group">
-                <li class="list-group-item" *ngFor="let resource of resources">{{resource.title}}</li>
+                <li class="list-group-item list-group-item-action" *ngFor="let resource of resources;let i = index" (click)="selectResource(i)">{{resource.title}}</li>
         </ul>
 </form>

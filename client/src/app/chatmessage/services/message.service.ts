@@ -4,6 +4,7 @@ import Message from '../domain/Message';
 import { environment } from '../../../environments/environment';
 import Chatbox from '../../chatbox/domain/Chatbox';
 import { Observable } from 'rxjs/Observable';
+import Resource from '../../chatresource/domain/Resource';
 
 const BASE_URL = environment.serverurl + "/api/chatmessages"
 @Injectable()
@@ -20,18 +21,18 @@ export class MessageService {
   }
 
   add(message: Message, chatbox: number){
-    this.http.post(BASE_URL,{text: message.text, chatbox: chatbox},{
-      headers: {
-        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
-      }
-    }).subscribe(res => console.log(res))
-  }
-
-  remove(message: Message){
-    this.http.delete(BASE_URL+'/'+message.id,{
+    return this.http.post(BASE_URL,{text: message.text, chatbox: chatbox},{
       headers: {
         'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
       }
     })
+  }
+
+  remove(message: number){
+    this.http.delete(BASE_URL+'/'+message,{
+      headers: {
+        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
+      }
+    }).subscribe(res => console.log(res))
   }
 }

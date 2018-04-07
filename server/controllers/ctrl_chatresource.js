@@ -16,7 +16,7 @@ module.exports = {
             return res.status(422).json({"result":"Required body parameters are: title, description, message, url"})
         }
         const params = {title: req.body.title, description: req.body.description, message: req.body.message, url: req.body.url}
-        const new_query = "MATCH (n:chatmessage {text: $message}) CREATE (u:chatresource {title:$title, url: $url,description:$description, since: timestamp()})-[:MENTIONED_IN]->(n)"
+        const new_query = "MATCH (n:chatmessage) WHERE ID(n) = toInteger($message) CREATE (u:chatresource {title:$title, url: $url,description:$description, since: timestamp()})-[:MENTIONED_IN]->(n)"
         session.run(new_query,params)
             .then((result) => {
                 res.status(201).json(result)

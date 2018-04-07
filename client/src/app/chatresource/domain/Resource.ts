@@ -4,4 +4,5 @@ export default class Resource {
     description: string;
     url: string;
     since: string;
+    message: number;
 }

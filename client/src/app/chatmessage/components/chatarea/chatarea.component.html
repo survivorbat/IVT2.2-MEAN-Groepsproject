@@ -16,8 +16,8 @@
       </div>
     </div>
     <div class="col-auto">
-      <button type="submit" class="btn btn-outline-primary btn-sm">&#9998;</button>
-      <button type="submit" class="btn btn-outline-danger btn-sm">&#10799;</button>
+      <button type="submit" (click)="editMessage(message.id)" class="btn btn-outline-primary btn-sm">&#9998;</button>
+      <button type="submit" (click)="deleteMessage(message.id)" class="btn btn-outline-danger btn-sm">&#10799;</button>
     </div>
   </div>
 

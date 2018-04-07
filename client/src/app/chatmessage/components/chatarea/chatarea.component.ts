@@ -24,5 +24,7 @@ export class ChatareaComponent implements OnInit {
   getMessages(chatbox: number){
     this.chatmessageservice.getMessages(chatbox).subscribe(res => {this.chatmessages=res.reverse()}, err => {})
   }
-
+  deleteMessage(id){
+    this.chatmessageservice.remove(id)
+  }
 }

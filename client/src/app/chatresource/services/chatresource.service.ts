@@ -35,7 +35,7 @@ export class ChatresourceService implements ResourceInterface {
       headers: {
         'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
       }
-    });
+    }).subscribe(res => console.log(res));
   }
   constructor(private http: HttpClient) { }
 

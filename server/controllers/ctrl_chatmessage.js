@@ -17,7 +17,7 @@ module.exports = {
         if(req.params.chatbox===undefined){
             return res.status(422).json({"result":"Please add text and a chatbox to your message"})
         }
-        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) WHERE ID(chatbox) = $chatbox RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since} as chatmessage"
+        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) WHERE ID(chatbox) = toInteger($chatbox) RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since} as chatmessage"
         const params = {chatbox: parseInt(req.params.chatbox)}
         session.run(query,params)
             .then(result => result.records.map(item => item._fields[0]))
@@ -35,6 +35,12 @@ module.exports = {
         const params = {text: req.body.text, chatbox: parseInt(req.body.chatbox), by: req.user.sub.userid}
         const new_query = "MATCH (u:chatbox) WHERE ID(u)=$chatbox MATCH (user:user) WHERE ID(user)=$by CREATE (user)-[:POSTED]->(m:chatmessage {text:$text, since: timestamp()})-[:POSTED_IN]->(u)"
         session.run(new_query,params)
+            .then((result) => {
+                const new_query = "MATCH (n:chatmessage) return {id: ID(n)} order by n.since desc LIMIT 1"
+                return session.run(new_query)
+            })
+            .then(result => result.records.map(item => item._fields[0]))
+            .then(transformIntegers)
             .then((result) => {
                 res.status(201).json(result)
             })
@@ -54,7 +60,7 @@ module.exports = {
     },
     delete(req,res,next){
         const params = {id: parseInt(req.params.id)}
-        const new_query = "MATCH (n:chatmessage) WHERE id(n)= $id OPTIONAL MATCH (n)-[r]-() DELETE r,n"
+        const new_query = "MATCH (n:chatmessage) WHERE ID(n)= toInteger($id) DETACH DELETE n"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)
