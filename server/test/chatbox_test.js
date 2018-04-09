@@ -53,23 +53,20 @@ describe('Chatbox API interface', () => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
                 testID = res.body.filter(item => item.name === 'TEST')[0].id
-                testID = parseInt(testID)
                 console.log(testID)
                 done()
             })
     })
-    /*
+
     it('should DELETE /api/chatboxes correctly', done => {
 		chai.request(server)
 			.delete('/api/chatboxes/'+testID)
             .set('Authorization', 'bearer ' + token)
 			.set('content-type', 'application/x-www-form-urlencoded')
 			.end((err, res) => {
-                console.log(testID)
-                console.log(res.body)
 				res.should.have.status(200)
 				done()
 			})
 	})
-    */
+
 })

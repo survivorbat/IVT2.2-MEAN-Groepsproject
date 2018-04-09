@@ -37,7 +37,7 @@ module.exports = {
     },
     delete(req,res,next){
         const params = {id: parseInt(req.params.id)}
-        const new_query = "MATCH (n:chatbox) WHERE id(n)= $id OPTIONAL MATCH (n)-[r]-() DELETE r,n"
+        const new_query = "MATCH (n:chatbox) WHERE id(n)= toInteger($id) OPTIONAL MATCH (n)-[r]-() DELETE r,n"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)
