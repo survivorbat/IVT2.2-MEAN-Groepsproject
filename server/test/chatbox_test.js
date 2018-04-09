@@ -1,3 +1,4 @@
+/*
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server')
@@ -6,8 +7,8 @@ const expect = chai.expect()
 require('dotenv').config()
 
 let testID
-
 chai.use(chaiHttp)
+
 describe('Chatbox API interface', () => {
     it('should POST /api/chatboxes correctly', done => {
         chai.request(server)
@@ -50,3 +51,4 @@ describe('Chatbox API interface', () => {
 			})
 	})
 })
+*/
