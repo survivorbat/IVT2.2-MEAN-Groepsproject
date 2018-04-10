@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import ResourceInterface from '../ResourceInterface'
 import Resource from '../domain/Resource'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 import { environment } from '../../../environments/environment';
 

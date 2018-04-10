@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import ResourceInterface from '../ResourceInterface';
 import Resource from '../domain/Resource';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 const BASE_URL = environment.serverurl + "/api/chatresources"
