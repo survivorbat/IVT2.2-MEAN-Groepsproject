@@ -1,12 +1,14 @@
 <form>
-        <div class="col">
-                <input type="text" name="message" [(ngModel)]="message.text" (keyup)="checkMessage()" placeholder="Type hier een chat bericht"
-                        class="form-control">
-        </div>
-        <div class="col-auto">
-                <button type="submit" class="btn btn-outline-primary mb-2" (click)="submit()">Stuur</button>
-        </div>
-        <ul class="list-group">
-                <li class="list-group-item list-group-item-action" *ngFor="let resource of resources;let i = index" (click)="selectResource(i)">{{resource.title}}</li>
-        </ul>
+  <div class="form-row">
+    <div class="col">
+      <input type="text" name="message" [(ngModel)]="message.text" (keyup)="checkMessage()" placeholder="Type hier een chat bericht"
+      class="form-control">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-outline-primary mb-2" (click)="submit()">Stuur</button>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-action" *ngFor="let resource of resources;let i = index" (click)="selectResource(i)">{{resource.title}}</li>
+    </ul>
+  </div>
 </form>
