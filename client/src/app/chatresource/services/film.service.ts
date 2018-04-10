@@ -9,7 +9,7 @@ const BASE_URL = "https://avancinemalite.herokuapp.com/api/films"
 @Injectable()
 export class FilmService implements ResourceInterface {
 
-  httpOptions(): String {
+  httpOptions(): Object {
     return {headers: new HttpHeaders({ 'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN') })};
   }
 

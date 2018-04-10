@@ -9,7 +9,7 @@ const BASE_URL = environment.serverurl + "/api/chatresources"
 @Injectable()
 export class ChatresourceService implements ResourceInterface {
 
-  httpOptions(): String {
+  httpOptions(): Object {
     return {headers: new HttpHeaders({ 'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN') })};
   }
 

@@ -11,7 +11,7 @@ export class ChatboxService {
 
   constructor(private http: HttpClient) { }
 
-  httpOptions(): String {
+  httpOptions(): Object {
     return {headers: new HttpHeaders({ 'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN') })};
   }
 
