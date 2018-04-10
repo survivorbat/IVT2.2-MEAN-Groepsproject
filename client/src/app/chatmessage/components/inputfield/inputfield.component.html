@@ -7,8 +7,8 @@
     <div class="col-auto">
       <button type="submit" class="btn btn-outline-primary mb-2" (click)="submit()">Stuur</button>
     </div>
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-action" *ngFor="let resource of resources;let i = index" (click)="selectResource(i)">{{resource.title}}</li>
+    <ul class="list-group resourcesList">
+      <li class="list-group-item list-group-item-action list-group-item-secondary" *ngFor="let resource of resources;let i = index" (click)="selectResource(i)">{{resource.title}}</li>
     </ul>
   </div>
 </form>
