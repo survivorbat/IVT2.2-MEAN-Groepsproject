@@ -4,6 +4,12 @@
   height: calc(100% - 30px);;
 }
 
+.chatBoxList {
+  overflow-y:scroll;
+  overflow-x:hidden;
+  height: 100%;
+}
+
 .chatBox {
   overflow-y:scroll;
   overflow-x:hidden;

@@ -7,7 +7,7 @@
   </div>
 </nav>
 <div class="row container-fluid content">
-  <div class="col-md-2" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
+  <div class="col-md-2 chatBoxList" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
     <app-chatboxlist></app-chatboxlist>
   </div>
   <div class="col-md-10 chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
