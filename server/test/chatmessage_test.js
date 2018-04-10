@@ -6,6 +6,7 @@ const expect = chai.expect()
 require('dotenv').config()
 
 let testID
+let token
 
 chai.use(chaiHttp)
 describe('Chatmessage API interface', () => {
@@ -26,7 +27,7 @@ describe('Chatmessage API interface', () => {
         chai.request(server)
             .post('/api/chatmessages')
             .set('Authorization', 'bearer ' + token)
-            .send({text:'TESTMESSAGEDONOTREPLICATE',by:'asdf', chatbox: 0})
+            .send({title:'TESTMESSAGEDONOTREPLICATE',by:'asdf', chatbox: 97})
             .end((err, res) => {
                 res.should.have.status(201)
                 done()
@@ -37,7 +38,7 @@ describe('Chatmessage API interface', () => {
             .post('/api/chatmessages')
             .set('Authorization', 'bearer ' + token)
             .set('content-type', 'application/x-www-form-urlencoded')
-            .send({text:'TESTMESSAGEDONOTREPLICATE'})
+            .send({title:'TESTMESSAGEDONOTREPLICATE'})
             .end((err, res) => {
                 res.should.have.status(422)
                 res.body.should.be.a('object')
@@ -46,7 +47,7 @@ describe('Chatmessage API interface', () => {
     })
     it('should GET /api/chatmessages correctly', done => {
         chai.request(server)
-            .get('/api/chatmessages/chatbox/0')
+            .get('/api/chatmessages/chatbox/97')
             .set('Authorization', 'bearer ' + token)
             .end((err, res) => {
                 res.should.have.status(200)

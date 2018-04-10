@@ -70,7 +70,7 @@ export class InputfieldComponent implements OnInit {
         this.submitResource(this.selectedResource, res[0].id)
       })
     } else {
-      this.messageservice.add(this.message,this.chatbox)
+      this.messageservice.add(this.message,this.chatbox).subscribe()
     }
     this.message.text=""
   }
