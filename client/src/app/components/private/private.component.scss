@@ -5,13 +5,13 @@
 }
 
 .chatBoxList {
-  overflow-y:scroll;
+  overflow-y:auto;
   overflow-x:hidden;
   height: 100%;
 }
 
 .chatBox {
-  overflow-y:scroll;
+  overflow-y:auto;
   overflow-x:hidden;
   height: 100%;
 }
