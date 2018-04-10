@@ -17,7 +17,7 @@ export class ChatareaComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       clearInterval(this.interval)
-      this.interval = window.setInterval(() => this.getMessages(parseInt(params.chatboxid)),500)
+      this.interval = window.setInterval(() => this.getMessages(parseInt(params.chatboxid)),1000)
     })
   }
 
