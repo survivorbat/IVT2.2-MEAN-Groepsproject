@@ -17,7 +17,7 @@
   <div class="col-md-2 chatBoxList" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
     <app-chatboxlist></app-chatboxlist>
   </div>
-  <div class="col-md-10 chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
+  <div class="col-md-10 chatBox" id="chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
     <app-chatarea></app-chatarea>
     <div class="chatBar">
       <app-inputfield></app-inputfield>

@@ -69,10 +69,10 @@ export class InputfieldComponent implements OnInit {
       if(this.selectedResource!==undefined && this.selectedResource!==null){
         this.messageservice.add(this.message,this.chatbox).subscribe((res: any) => {
           this.submitResource(this.selectedResource, res[0].id)
-          this.message.text=""
+          this.newMessageCreated()
         })
       } else {
-        this.messageservice.add(this.message,this.chatbox).subscribe(res => this.message.text="")
+        this.messageservice.add(this.message,this.chatbox).subscribe(res => this.newMessageCreated())
       }
     }
   }
@@ -80,5 +80,13 @@ export class InputfieldComponent implements OnInit {
     resource.message=messageid
     this.resourcservice.addItem(resource)
     this.selectedResource=null
+  }
+
+  private newMessageCreated(): void {
+    setTimeout(function(){
+      var chatboxDiv = document.getElementById("chatBox");
+      chatboxDiv.scrollTop = chatboxDiv.scrollHeight;
+    }, 1000);
+    this.message.text=""
   }
 }
