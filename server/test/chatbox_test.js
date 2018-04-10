@@ -6,6 +6,7 @@ const expect = chai.expect()
 require('dotenv').config()
 
 let testID
+let token;
 chai.use(chaiHttp)
 
 describe('Chatbox API interface', () => {
@@ -26,7 +27,7 @@ describe('Chatbox API interface', () => {
         chai.request(server)
             .post('/api/chatboxes')
             .set('Authorization', 'bearer ' + token)
-            .send({name:'TEST',maxPeople:10, description:'testbox'})
+            .send({name:'TEST', description:'test'})
             .end((err, res) => {
                 res.should.have.status(201)
                 res.body.should.be.a('object')

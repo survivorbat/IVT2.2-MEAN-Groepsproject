@@ -13,7 +13,7 @@ export class MessageService {
   constructor(private http: HttpClient) { }
 
   getMessages(chatbox: number): Observable<Message[]> {
-    return this.http.get<Message[]>(BASE_URL+'/'+chatbox,{
+    return this.http.get<Message[]>(BASE_URL+'/chatbox/'+chatbox,{
       headers: {
         'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
       }
