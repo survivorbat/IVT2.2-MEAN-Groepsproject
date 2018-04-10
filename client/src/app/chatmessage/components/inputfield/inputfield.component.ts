@@ -68,11 +68,11 @@ export class InputfieldComponent implements OnInit {
     if(this.selectedResource!==undefined && this.selectedResource!==null){
       this.messageservice.add(this.message,this.chatbox).subscribe((res: any) => {
         this.submitResource(this.selectedResource, res[0].id)
+        this.message.text=""
       })
     } else {
-      this.messageservice.add(this.message,this.chatbox).subscribe(res => console.log(res))
+      this.messageservice.add(this.message,this.chatbox).subscribe(res => this.message.text="")
     }
-    this.message.text=""
   }
   private submitResource(resource: Resource, messageid: number){
     resource.message=messageid
