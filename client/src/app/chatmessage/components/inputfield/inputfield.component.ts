@@ -24,7 +24,7 @@ export class InputfieldComponent implements OnInit {
   private suggestion: string
   private chatbox: number
   private selectedResource: Resource
-  
+
   constructor(private filmservice: FilmService, private messageservice: MessageService, private route:ActivatedRoute, private pokemonservice: PokemonService, private resourcservice: ChatresourceService) {
     this.message=new Message()
     this.services=new Array<ResourceCommand>()
@@ -36,7 +36,7 @@ export class InputfieldComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => this.chatbox=params.chatboxid)
   }
-    
+
   checkMessage() {
     if(this.message.text.startsWith('/')){
       let counter=0
@@ -65,13 +65,15 @@ export class InputfieldComponent implements OnInit {
     this.message.text=""
   }
   submit(){
-    if(this.selectedResource!==undefined && this.selectedResource!==null){
-      this.messageservice.add(this.message,this.chatbox).subscribe((res: any) => {
-        this.submitResource(this.selectedResource, res[0].id)
-        this.message.text=""
-      })
-    } else {
-      this.messageservice.add(this.message,this.chatbox).subscribe(res => this.message.text="")
+    if (this.message.text.trim().length !== 0) {
+      if(this.selectedResource!==undefined && this.selectedResource!==null){
+        this.messageservice.add(this.message,this.chatbox).subscribe((res: any) => {
+          this.submitResource(this.selectedResource, res[0].id)
+          this.message.text=""
+        })
+      } else {
+        this.messageservice.add(this.message,this.chatbox).subscribe(res => this.message.text="")
+      }
     }
   }
   private submitResource(resource: Resource, messageid: number){
