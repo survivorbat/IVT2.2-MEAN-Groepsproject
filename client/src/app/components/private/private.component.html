@@ -2,18 +2,25 @@
   <a class="navbar-brand" href="#">💬 Wogema</a>
   <div class="">
     <button type="button" class="btn btn-secondary d-md-none" (click)="showChatlist=!showChatlist;">Chat ruimtes</button>
-    <button type="button" class="btn btn-secondary">?</button>
+    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target=".bd-example-modal-lg">?</button>
     <button type="button" (click)="logOut()" class="btn btn-secondary">🚪</button>
   </div>
 </nav>
 <div class="row container-fluid content">
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <app-resourcelist></app-resourcelist>
+      </div>
+    </div>
+  </div>
   <div class="col-md-2 chatBoxList" [ngClass]="{ 'd-none d-md-block': showChatlist === false }">
     <app-chatboxlist></app-chatboxlist>
   </div>
   <div class="col-md-10 chatBox" [ngClass]="{ 'd-none d-md-block': showChatlist !== false }">
     <app-chatarea></app-chatarea>
     <div class="chatBar">
-        <app-inputfield></app-inputfield>
+      <app-inputfield></app-inputfield>
     </div>
   </div>
 </div>

@@ -12,6 +12,7 @@ import { PokemonService } from './services/pokemon.service';
     HttpClientModule
   ],
   declarations: [ResourcelistComponent],
+  exports:[ResourcelistComponent],
   providers: [FilmService, ChatresourceService, PokemonService]
 })
 export class ChatresourceModule { }
