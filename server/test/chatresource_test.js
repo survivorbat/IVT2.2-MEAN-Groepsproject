@@ -35,7 +35,6 @@ describe('Chatresource API interface', () => {
                 done()
             })
     })
-    
 	it('should POST /api/chatresources correctly', done => {
         chai.request(server)
             .post('/api/chatresources')

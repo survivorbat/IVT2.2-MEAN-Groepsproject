@@ -10,6 +10,7 @@ import Chatbox from '../../../chatbox/domain/Chatbox'
 import { ActivatedRoute } from '@angular/router'
 import ResourceCommand from '../../../chatresource/domain/ResourceCommand'
 import { PokemonService } from '../../../chatresource/services/pokemon.service'
+import { SpeciesService } from '../../../chatresource/services/species.service'
 import { ChatresourceService } from '../../../chatresource/services/chatresource.service'
 
 @Component({
@@ -25,11 +26,12 @@ export class InputfieldComponent implements OnInit {
   private chatbox: number
   private selectedResource: Resource
 
-  constructor(private filmservice: FilmService, private messageservice: MessageService, private route:ActivatedRoute, private pokemonservice: PokemonService, private resourcservice: ChatresourceService) {
+  constructor(private filmservice: FilmService, private messageservice: MessageService, private route:ActivatedRoute, private pokemonservice: PokemonService, private speciesservice: SpeciesService, private resourcservice: ChatresourceService) {
     this.message=new Message()
     this.services=new Array<ResourceCommand>()
     this.services.push(new ResourceCommand('/film', this.filmservice))
     this.services.push(new ResourceCommand('/pokemon', this.pokemonservice))
+    this.services.push(new ResourceCommand('/soort', this.speciesservice))
     this.selectedResource=null
   }
 
@@ -57,7 +59,7 @@ export class InputfieldComponent implements OnInit {
         this.resources=[]
       }
     } else {
-      this.resources=[]
+      this.resources=[this.selectedResource]
     }
   }
   selectResource(index){

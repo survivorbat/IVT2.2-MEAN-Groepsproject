@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core'
 import { MessageService } from '../../services/message.service'
+import { ChatresourceService } from '../../../chatresource/services/chatresource.service'
 import Message from '../../domain/Message'
 import { ActivatedRoute, Params } from '@angular/router'
 import Chatbox from '../../../chatbox/domain/Chatbox'
+import * as moment from 'moment';
+import 'moment/locale/nl';
+
 
 @Component({
   selector: 'app-chatarea',
@@ -11,8 +15,10 @@ import Chatbox from '../../../chatbox/domain/Chatbox'
 })
 export class ChatareaComponent implements OnInit {
   chatmessages: Message[]
+  private resources;
   private interval
-  constructor(private chatmessageservice: MessageService, private activatedRoute: ActivatedRoute) { }
+  private loader
+  constructor(private chatmessageservice: MessageService, private chatresourceservice: ChatresourceService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -22,9 +28,24 @@ export class ChatareaComponent implements OnInit {
   }
 
   getMessages(chatbox: number){
-    this.chatmessageservice.getMessages(chatbox).subscribe(res => {this.chatmessages=res.reverse()}, err => {})
+    this.loader = this.chatmessageservice.getMessages(chatbox).subscribe(res => {this.chatmessages=res.reverse()}, err => {})
+    this.getResources()
   }
   deleteMessage(id){
     this.chatmessageservice.remove(id)
+  }
+  timeAgo(time) {
+    return moment(time).fromNow()
+  }
+
+  getResource(id) {
+    if (this.resources) {
+      return JSON.stringify(this.resources.find(x => x.id === id));
+    }
+    return null
+  }
+
+  getResources(): void{
+    this.chatresourceservice.getItems().subscribe(res => this.resources=res)
   }
 }

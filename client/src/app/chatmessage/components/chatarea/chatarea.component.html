@@ -2,16 +2,21 @@
 
   <div class="row">
     <div class="col-auto">
-      <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=n" class="avatar">
+      <img src="https://api.adorable.io/avatars/75/{{message.username}}.png" class="avatar">
     </div>
     <div class="col">
       <div class="row">
         <div class="col-12">
           <b>{{message.username}}</b>
-          <i>{{message.since}}</i>
+          <i>{{timeAgo(message.since)}}</i>
         </div>
         <div class="col-12">
           {{message.text}}
+        </div>
+        <div class="col-12 resourceView" *ngIf="message.resource">
+          <div class="alert alert-secondary" role="alert">
+            <app-resourceitem resourceString="{{getResource(message.resource)}}"></app-resourceitem>
+          </div>
         </div>
       </div>
     </div>
@@ -20,5 +25,4 @@
       <button type="submit" (click)="deleteMessage(message.id)" class="btn btn-outline-danger btn-sm">&#10799;</button>
     </div>
   </div>
-
 </div>

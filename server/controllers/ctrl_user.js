@@ -47,7 +47,7 @@ module.exports = {
     },
     delete(req,res,next){
         const params = {id: parseInt(req.params._id)}
-        const delete_query = "MATCH (u:user) WHERE ID(u)=toInteger($id) DELETE u"
+        const delete_query = "MATCH (u:user) WHERE ID(u)=toInteger($id) DETACH DELETE u"
         session.run(delete_query,params).then((result) => {
             res.status(204).json()
         }).catch(next)
