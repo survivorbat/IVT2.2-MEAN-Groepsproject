@@ -3,6 +3,7 @@ const routes = express.Router()
 
 const chatresourcecontroller = require('../controllers/ctrl_chatresource')
 
+routes.get('/:id', chatresourcecontroller.get)
 routes.get('/', chatresourcecontroller.getAll)
 routes.post('/', chatresourcecontroller.add)
 routes.patch('/:id', chatresourcecontroller.update)

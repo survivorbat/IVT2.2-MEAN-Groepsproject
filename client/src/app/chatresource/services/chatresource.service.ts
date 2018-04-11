@@ -13,8 +13,8 @@ export class ChatresourceService implements ResourceInterface {
     return {headers: new HttpHeaders({ 'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN') })};
   }
 
-  getItem(item: Resource): Observable<Resource> {
-    return this.http.get<Resource>(BASE_URL+'/'+item.title, this.httpOptions());
+  getItem(item): Observable<Resource> {
+    return this.http.get<Resource>(BASE_URL+'/'+item, this.httpOptions());
   }
   getItems(): Observable<Resource[]> {
     return this.http.get<Resource[]>(BASE_URL, this.httpOptions());

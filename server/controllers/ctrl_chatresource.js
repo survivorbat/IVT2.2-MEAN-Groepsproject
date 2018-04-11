@@ -1,6 +1,17 @@
 const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
+    get(req, res, next){
+      const params = {id: req.params.id}
+      const query = "MATCH (u:chatresource) WHERE ID(u)=toInteger($id) RETURN {id: ID(u), title: u.title, url: u.url, description: u.description, since: u.since} as chatresource"
+      session.run(query,params)
+          .then(result => result.records.map(item => item._fields[0]))
+          .then(transformIntegers)
+          .then((result) => {
+              res.status(200).json(result[0])
+          })
+          .catch(next)
+    },
     getAll(req, res, next){
         const query = "MATCH (u:chatresource) RETURN {id: ID(u), title: u.title, url: u.url, description: u.description, since: u.since} as chatresource"
         session.run(query)
@@ -52,8 +63,8 @@ const transformIntegers = function(result) {
         result.forEach((row, i)=>  {
             Object.keys(row).forEach((val, j) => {
 
-                row[val] = neo4j.isInt(row[val]) 
-                ? (neo4j.integer.inSafeRange(row[val]) ? row[val].toNumber() : row[val].toString()) 
+                row[val] = neo4j.isInt(row[val])
+                ? (neo4j.integer.inSafeRange(row[val]) ? row[val].toNumber() : row[val].toString())
                 : row[val];
             })
         })
