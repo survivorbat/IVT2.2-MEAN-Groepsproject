@@ -10,7 +10,7 @@ const BASE_URL = environment.serverurl + "/api/chatresources"
 export class ChatresourceService implements ResourceInterface {
 
   httpOptions(): Object {
-    return {headers: new HttpHeaders({ 'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN') })};
+    return {headers: new HttpHeaders({'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN') })};
   }
 
   getItem(item): Observable<Resource> {

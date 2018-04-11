@@ -8,7 +8,7 @@ import Resource from '../../domain/Resource';
   styleUrls: ['./resourceitem.component.scss']
 })
 export class ResourceitemComponent implements OnInit {
-  @Input() resourceId: number;
+  @Input() resourceString: string;
 
   private resource: Resource;
   private error: string;
@@ -16,10 +16,6 @@ export class ResourceitemComponent implements OnInit {
   constructor(private chatresourceservice: ChatresourceService) { }
 
   ngOnInit() {
-    this.getResource();
-  }
-
-  getResource(): void{
-    this.chatresourceservice.getItem(this.resourceId).subscribe(res => this.resource=res, err => this.error="Error bij het ophalen van resource")
+     this.resource = JSON.parse(this.resourceString)
   }
 }
