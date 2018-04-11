@@ -8,10 +8,10 @@ require('dotenv').config()
 let token
 let username = "testUsor"
 let pwd = "secretPWD"
+let TestUserID
 
 chai.use(chaiHttp)
 describe('User API interface', () => {
-    /*
     it('should create user', function(done){
         chai.request(server)
             .post('/api/users')
@@ -23,7 +23,6 @@ describe('User API interface', () => {
                 done()
             })
     })
-    */
     it('should fail to post same user', function(done){
         chai.request(server)
             .post('/api/users')
@@ -47,6 +46,17 @@ describe('User API interface', () => {
                 done();
         })
     })
+    it('should GET specific user', function(done){
+        chai.request(server)
+            .get('/api/users/me')
+            .set('Authorization', 'bearer ' + token)
+            .end(function(err, res){
+                res.should.have.status(200)
+                res.body.should.be.a('object')
+                TestUserID = res.body.id
+                done()
+        })
+    })
     it('should GET all users', function(done){
         chai.request(server)
             .get('/api/users')
@@ -59,16 +69,14 @@ describe('User API interface', () => {
                 done()
         })
     })
-    //update
-    //delet
     /*
     it('should DELETE test user', function(done){
         chai.request(server)
-			.delete('/api/users/'+ 85)
+			.delete('/api/users/'+ TestUserID)
             .set('Authorization', 'bearer ' + token)
             .end(function (err, res){
+                res.should.have.status(204);
                 console.log(res)
-                res.should.have.status(200);
                 done();
             })
     })
