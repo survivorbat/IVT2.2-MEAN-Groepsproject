@@ -2,7 +2,7 @@ const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (u:user) RETURN u"
+        const query = "MATCH (u:user) RETURN {id: ID(u), username: u.username} as user"
         session.run(query)
             .then((result) => {
                 res.status(200).json(result.records)

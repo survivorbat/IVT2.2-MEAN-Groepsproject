@@ -6,7 +6,7 @@ const expect = chai.expect()
 require('dotenv').config()
 
 let token
-let username = "testUsr"
+let username = "testUsor"
 let pwd = "secretPWD"
 let TestUserID
 
@@ -35,4 +35,18 @@ describe('User API interface', () => {
                  done()
          })
      })
+     
+    it('should GET all users', function(done){
+        chai.request(server)
+             .get('/api/users')
+             .set('Authorization', 'bearer ' + token)
+             .end(function(err, res){
+                console.log(res)
+                res.should.have.status(200)
+                 //Check if our test user exists
+                res.body.should.be.a('array')
+                res.text.should.contain(username)
+                done()
+        })
+    })
 })
