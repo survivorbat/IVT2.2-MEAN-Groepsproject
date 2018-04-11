@@ -4,7 +4,7 @@ const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
-        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since} as chatmessage"
+        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) OPTIONAL MATCH (r:chatresource)-->(m) RETURN {id: ID(m),username: u.username, userid: ID(u), text: m.text, since: m.since, resource: ID(r)} as chatmessage"
         session.run(query)
             .then(result => result.records.map(item => item._fields[0]))
             .then(transformIntegers)
@@ -17,7 +17,7 @@ module.exports = {
         if(req.params.chatbox===undefined){
             return res.status(422).json({"result":"Please add text and a chatbox to your message"})
         }
-        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) WHERE ID(chatbox) = toInteger($chatbox) RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since} as chatmessage"
+        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) OPTIONAL MATCH (r:chatresource)-->(m) WHERE ID(chatbox) = toInteger(97) RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since, resource: ID(r)} as chatmessage"
         const params = {chatbox: parseInt(req.params.chatbox)}
         session.run(query,params)
             .then(result => result.records.map(item => item._fields[0]))
@@ -51,7 +51,7 @@ module.exports = {
             return res.status(422).json({"result":"Required body parameters are: name, maxPeople"})
         }
         const params = {id: parseInt(req.params.id), name: req.body.name, maxPeople: req.body.maxPeople, description: req.body.description}
-        const new_query = "MATCH (chatbox:chatbox) WHERE id(chatbox)= $id SET chatbox.name=$name, chatbox.maxPeople=$maxPeople, chatbox.description = $description"
+        const new_query = "MATCH (chatbox:chatbox) WHERE id(chatbox)= toInteger($id) SET chatbox.name=$name, chatbox.maxPeople=$maxPeople, chatbox.description = $description"
         session.run(new_query,params)
             .then((result) => {
                 res.status(200).json(result)
