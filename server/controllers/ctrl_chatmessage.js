@@ -33,7 +33,7 @@ module.exports = {
             return res.status(422).json({"result":"Please add text and a chatbox to your message"})
         }
         const params = {text: req.body.text, chatbox: parseInt(req.body.chatbox), by: req.user.sub.userid}
-        const new_query = "MATCH (u:chatbox) WHERE ID(u)=$chatbox MATCH (user:user) WHERE ID(user)=$by CREATE (user)-[:POSTED]->(m:chatmessage {text:$text, since: timestamp()})-[:POSTED_IN]->(u)"
+        const new_query = "MATCH (u:chatbox) WHERE ID(u)=toInteger($chatbox) MATCH (user:user) WHERE ID(user)=toInteger($by) CREATE (user)-[:POSTED]->(m:chatmessage {text:$text, since: timestamp()})-[:POSTED_IN]->(u)"
         session.run(new_query,params)
             .then((result) => {
                 const new_query = "MATCH (n:chatmessage) return {id: ID(n)} order by n.since desc LIMIT 1"
