@@ -16,6 +16,8 @@ export class ResourceitemComponent implements OnInit {
   constructor(private chatresourceservice: ChatresourceService) { }
 
   ngOnInit() {
-     this.resource = JSON.parse(this.resourceString)
+    if (this.resourceString) {
+      this.resource = JSON.parse(this.resourceString)
+    }
   }
 }

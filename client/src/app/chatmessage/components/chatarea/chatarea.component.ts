@@ -39,7 +39,10 @@ export class ChatareaComponent implements OnInit {
   }
 
   getResource(id) {
-    return JSON.stringify(this.resources.find(x => x.id === id));
+    if (this.resources) {
+      return JSON.stringify(this.resources.find(x => x.id === id));
+    }
+    return null
   }
 
   getResources(): void{
