@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router'
 import { ChatboxService } from '../../services/chatbox.service';
 import Chatbox from '../../domain/Chatbox';
 
@@ -10,6 +11,7 @@ import Chatbox from '../../domain/Chatbox';
 export class ChatboxlistComponent implements OnInit {
 
   chatboxes: Chatbox[];
+  private chatboxCurrent: number;
   private error: string;
   showCreateNew = false;
   newBox: Chatbox = {
@@ -19,10 +21,13 @@ export class ChatboxlistComponent implements OnInit {
     since: null
   };
 
-  constructor(private chatboxService: ChatboxService) { }
+  constructor(private chatboxService: ChatboxService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.getChatboxes();
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.chatboxCurrent = parseInt(params.chatboxid)
+    })
   }
 
   public get Chatboxes(): Chatbox[] {

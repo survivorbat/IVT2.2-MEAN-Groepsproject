@@ -1,5 +1,5 @@
 <ul class="list-group">
-  <li class="list-group-item list-group-item-action" *ngFor="let chatbox of chatboxes">
+  <li class="list-group-item list-group-item-action" *ngFor="let chatbox of chatboxes" [ngClass]="{ 'list-group-item-secondary': chatbox.id === chatboxCurrent }">
     <div class="row">
       <div class="col">
         <div [ngClass]="{ 'hidden': chatbox.edit === false }"><a routerLink="{{'/m/'+chatbox.id}}">{{chatbox.name}}</a></div>
