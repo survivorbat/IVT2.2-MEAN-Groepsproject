@@ -46,29 +46,29 @@ describe('User API interface', () => {
     //             done();
     //     })
     // })
-    it('should GET specific user', function(done){
-        chai.request(server)
-            .get('/api/users/me')
-            .set('Authorization', 'bearer ' + token)
-            .end(function(err, res){
-                res.should.have.status(200)
-                res.body.should.be.a('object')
-                TestUserID = res.body.id
-                done()
-        })
-    })
-    it('should GET all users', function(done){
-        chai.request(server)
-            .get('/api/users')
-            .set('Authorization', 'bearer ' + token)
-            .end(function(err, res){
-                res.should.have.status(200)
-                //Check if our test user exists
-                res.body.should.be.a('array')
-                res.text.should.contain(username)
-                done()
-        })
-    })
+    // it('should GET specific user', function(done){
+    //     chai.request(server)
+    //         .get('/api/users/me')
+    //         .set('Authorization', 'bearer ' + token)
+    //         .end(function(err, res){
+    //             res.should.have.status(200)
+    //             res.body.should.be.a('object')
+    //             TestUserID = res.body.id
+    //             done()
+    //     })
+    // })
+    // it('should GET all users', function(done){
+    //     chai.request(server)
+    //         .get('/api/users')
+    //         .set('Authorization', 'bearer ' + token)
+    //         .end(function(err, res){
+    //             res.should.have.status(200)
+    //             //Check if our test user exists
+    //             res.body.should.be.a('array')
+    //             res.text.should.contain(username)
+    //             done()
+    //     })
+    // })
     // it('should DELETE test user', function(done){
     //     chai.request(server)
 	// 		.delete('/api/users/'+ TestUserID)
