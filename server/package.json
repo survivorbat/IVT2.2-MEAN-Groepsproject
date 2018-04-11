@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node .", 
-    "test": "node node_modules/mocha/bin/_mocha ./test/user_test.js --reporter spec --exit",
+    "test": "node node_modules/mocha/bin/_mocha ./test/*test.js --reporter spec --exit",
     "startmon": "nodemon ."
   },
   "dependencies": {

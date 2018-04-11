@@ -14,7 +14,7 @@ describe('Chatmessage API interface', () => {
         chai.request(server)
             .post('/api/token')
             .set('content-type', 'application/x-www-form-urlencoded')
-            .send({username: 'asdf', password: 'asdf'})
+            .send({username: 'wouter', password: 'w'})
             .end(function (err, res){
                 res.should.have.status(201);
                 res.body.should.have.property('token');

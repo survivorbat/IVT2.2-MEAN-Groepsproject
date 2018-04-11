@@ -6,12 +6,13 @@ const expect = chai.expect()
 require('dotenv').config()
 
 let token
-let username = "testUsorx"
+let username = "testGebruiker"
 let pwd = "secretPWD"
 let TestUserID
 
 chai.use(chaiHttp)
 describe('User API interface', () => {
+    /*
     it('should create user', function(done){
         chai.request(server)
              .post('/api/users')
@@ -19,10 +20,10 @@ describe('User API interface', () => {
              .send({username: username, password: pwd})
                .end(function(err, res){
                 res.should.have.status(201)
-                console.log(res.body)
                 done()
              })
      })
+     */
     it('should fail to post same user', function(done){
          chai.request(server)
              .post('/api/users')
@@ -37,7 +38,7 @@ describe('User API interface', () => {
         chai.request(server)
              .post('/api/token')
              .set('content-type', 'application/x-www-form-urlencoded')
-             .send({username: 'asdf', password: 'asdf'})
+             .send({username: username, password: pwd})
              .end(function (err, res){
                  res.should.have.status(201);
                  res.body.should.have.property('token');
@@ -53,6 +54,7 @@ describe('User API interface', () => {
                 res.should.have.status(200)
                  res.body.should.be.a('object')
                  TestUserID = res.body.id
+                 console.log(TestUserID)
                  done()
          })
      })
@@ -61,7 +63,6 @@ describe('User API interface', () => {
              .get('/api/users')
              .set('Authorization', 'bearer ' + token)
              .end(function(err, res){
-                console.log(res)
                 res.should.have.status(200)
                  //Check if our test user exists
                 res.body.should.be.a('array')
@@ -70,13 +71,14 @@ describe('User API interface', () => {
         })
     })
     /*
-    it('should DELETE test user', function(done){
+    it('should DELETE /api/users/ correctly', function(done){
          chai.request(server)
-	 		.delete('/api/users/'+ TestUserID)
+	 		 .delete('/api/users/'+ TestUserID)
              .set('Authorization', 'bearer ' + token)
+			 .set('content-type', 'application/x-www-form-urlencoded')
              .end(function (err, res){
                  res.should.have.status(204);
-                console.log(res)
+                 console.log(TestUserID)
                  done();
              })
     })
