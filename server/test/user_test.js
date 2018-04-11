@@ -69,7 +69,6 @@ describe('User API interface', () => {
                 done()
         })
     })
-    /*
     it('should DELETE test user', function(done){
         chai.request(server)
 			.delete('/api/users/'+ TestUserID)
@@ -80,5 +79,4 @@ describe('User API interface', () => {
                 done();
             })
     })
-    */
 })
