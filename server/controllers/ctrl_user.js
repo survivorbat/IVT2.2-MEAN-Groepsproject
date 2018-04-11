@@ -11,7 +11,7 @@ module.exports = {
     },
     getMe(req, res, next){
         const params = {id: req.user.sub.userid}
-        const query = "MATCH (u:user) WHERE ID(u)=$id RETURN {id: ID(u), username: u.username} as user"
+        const query = "MATCH (u:user) WHERE ID(u)=toInteger($id) RETURN {id: ID(u), username: u.username} as user"
         session.run(query,params)
             .then(result => result.records.map(item => item._fields[0]))
             .then(transformIntegers)
@@ -47,7 +47,7 @@ module.exports = {
     },
     delete(req,res,next){
         const params = {id: parseInt(req.params._id)}
-        const delete_query = "MATCH (u:user) WHERE ID(u)=$id DELETE u"
+        const delete_query = "MATCH (u:user) WHERE ID(u)=toInteger($id) DELETE u"
         session.run(delete_query,params).then((result) => {
             res.status(204).json()
         }).catch(next)
