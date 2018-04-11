@@ -54,11 +54,9 @@ describe('Chatbox API interface', () => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
                 testID = res.body.filter(item => item.name === 'TEST')[0].id
-                console.log(testID)
                 done()
             })
     })
-
     it('should DELETE /api/chatboxes correctly', done => {
 		chai.request(server)
 			.delete('/api/chatboxes/'+testID)
@@ -69,5 +67,4 @@ describe('Chatbox API interface', () => {
 				done()
 			})
 	})
-
 })

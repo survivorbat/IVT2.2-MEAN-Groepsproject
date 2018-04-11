@@ -23,10 +23,24 @@ describe('Chatresource API interface', () => {
                 done();
         })
     })
+    
+    it('should POST /api/chatmessages correctly', done => {
+        chai.request(server)
+            .post('/api/chatmessages')
+            .set('Authorization', 'bearer ' + token)
+            .send({title:'testMessageResource',by:'asdf', chatbox: 97, text:'testMessageResource'})
+            .end((err, res) => {
+                res.should.have.status(201)
+                testID = res.body[0].id /* Note that we always assume the id to be first */
+                done()
+            })
+    })
+    
 	it('should POST /api/chatresources correctly', done => {
         chai.request(server)
             .post('/api/chatresources')
-            .send({title:'TEST',description:'TESTRESOURCE',message:'testmessage', url:'http://test.com'})
+            .set('Authorization', 'bearer ' + token)
+            .send({title:'TEST',description:'TESTRESOURCE',message:testID, url:'http://test.com'})
             .end((err, res) => {
                 res.should.have.status(201)
                 res.body.should.be.a('object')
@@ -36,6 +50,7 @@ describe('Chatresource API interface', () => {
     it('should POST /api/chatresources incorrectly', done => {
         chai.request(server)
             .post('/api/chatresources')
+            .set('Authorization', 'bearer ' + token)
             .set('content-type', 'application/x-www-form-urlencoded')
             .send({title:'TEST',description:'TESTRESOURCE'})
             .end((err, res) => {
@@ -47,6 +62,7 @@ describe('Chatresource API interface', () => {
 	it('should GET /api/chatresources/ correctly', done => {
         chai.request(server)
             .get('/api/chatresources')
+                .set('Authorization', 'bearer ' + token)
             .end((err, res) => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
@@ -56,6 +72,17 @@ describe('Chatresource API interface', () => {
     it('should DELETE /api/chatresources correctly', done => {
 		chai.request(server)
 			.delete('/api/chatresources/TEST')
+            .set('Authorization', 'bearer ' + token)
+			.set('content-type', 'application/x-www-form-urlencoded')
+			.end((err, res) => {
+				res.should.have.status(200)
+				done()
+			})
+	})
+    it('should CLEANUP after testing', done => {
+		chai.request(server)
+			.delete('/api/chatmessages/'+testID)
+            .set('Authorization', 'bearer ' + token)
 			.set('content-type', 'application/x-www-form-urlencoded')
 			.end((err, res) => {
 				res.should.have.status(200)
