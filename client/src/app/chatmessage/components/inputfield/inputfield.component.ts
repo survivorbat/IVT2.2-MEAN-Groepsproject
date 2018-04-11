@@ -57,7 +57,7 @@ export class InputfieldComponent implements OnInit {
         this.resources=[]
       }
     } else {
-      this.resources=[]
+      this.resources=[this.selectedResource]
     }
   }
   selectResource(index){
