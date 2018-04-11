@@ -27,7 +27,7 @@ describe('Chatmessage API interface', () => {
         chai.request(server)
             .post('/api/chatmessages')
             .set('Authorization', 'bearer ' + token)
-            .send({title:'TESTMESSAGEDONOTREPLICATE',by:'asdf', chatbox: 97})
+            .send({title:'TESTMESSAGEDONOTREPLICATE',by:'asdf', chatbox: 97, text:'TESTMESSAGEDONOTREPLICATE'})
             .end((err, res) => {
                 res.should.have.status(201)
                 done()
@@ -52,13 +52,10 @@ describe('Chatmessage API interface', () => {
             .end((err, res) => {
                 res.should.have.status(200)
                 res.body.should.be.a('array')
-                console.log(res.body)
                 testID = res.body.filter(item => item.text === 'TESTMESSAGEDONOTREPLICATE')[0].id
-                console.log(testID)
                 done()
             })
     })
-
     it('should DELETE /api/chatmessages correctly', done => {
 		chai.request(server)
 			.delete('/api/chatmessages/'+testID)
