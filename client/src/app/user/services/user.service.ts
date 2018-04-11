@@ -17,6 +17,14 @@ export class UserService {
     });
   }
 
+  getMe(): Observable<User>{
+    return this.http.get<User>(this.URL + '/me', {
+      headers: {
+        'Authorization': 'Bearer '+window.localStorage.getItem('API_TOKEN'),
+      }
+    });
+  }
+
   addUser(user: User): Observable<User> {
     return this.http.post<User>(this.URL, user);
   }

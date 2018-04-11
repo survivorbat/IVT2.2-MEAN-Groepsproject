@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 //Import various services
-import { FilmService } from '../../../chatresource/services/film.service';
-import Resource from '../../../chatresource/domain/Resource';
+import { FilmService } from '../../../chatresource/services/film.service'
+import Resource from '../../../chatresource/domain/Resource'
 
-import Message from '../../domain/Message';
-import ResourceInterface from '../../../chatresource/ResourceInterface';
+import Message from '../../domain/Message'
+import ResourceInterface from '../../../chatresource/ResourceInterface'
+import { MessageService } from '../../services/message.service'
+import Chatbox from '../../../chatbox/domain/Chatbox'
+import { ActivatedRoute } from '@angular/router'
+import ResourceCommand from '../../../chatresource/domain/ResourceCommand'
+import { PokemonService } from '../../../chatresource/services/pokemon.service'
+import { ChatresourceService } from '../../../chatresource/services/chatresource.service'
 
 @Component({
   selector: 'app-inputfield',
@@ -12,45 +18,75 @@ import ResourceInterface from '../../../chatresource/ResourceInterface';
   styleUrls: ['./inputfield.component.scss']
 })
 export class InputfieldComponent implements OnInit {
-  resources: Resource[];
-  message: Message;
-  private services: ResourceInterface[];
-  private suggestion: string;
-  
-  constructor(private filmservice: FilmService) {
-    this.message=new Message();
-    this.services=new Array<ResourceInterface>();
-    this.services.push(this.filmservice);
+  resources: Resource[]
+  message: Message
+  private services: ResourceCommand[]
+  private suggestion: string
+  private chatbox: number
+  private selectedResource: Resource
+
+  constructor(private filmservice: FilmService, private messageservice: MessageService, private route:ActivatedRoute, private pokemonservice: PokemonService, private resourcservice: ChatresourceService) {
+    this.message=new Message()
+    this.services=new Array<ResourceCommand>()
+    this.services.push(new ResourceCommand('/film', this.filmservice))
+    this.services.push(new ResourceCommand('/pokemon', this.pokemonservice))
+    this.selectedResource=null
   }
 
   ngOnInit() {
-    
-  }
-    
-  checkMessage() {
-    if(this.message.message.startsWith('/film ') && this.message.message.trim().substring(6).length>2){
-      this.suggestion="Laden...";
-      this.services[0].getItems().subscribe((res: Resource[])=> {
-        this.resources=res.filter(item => item.title.toLowerCase().indexOf(this.message.message.substring(6).toLowerCase())>-1 || item.description.toLowerCase().indexOf(this.message.message.substring(6).toLowerCase())>-1);
-        if(this.resources.length===0){
-          let emptyResource = new Resource();
-          emptyResource.title="Niks gevonden...";
-          this.resources.push(emptyResource);
-        }
-      })
-    } else {
-      this.resources=[];
-    }
-    // if(this.message.message.startsWith('/ov ')){
-    //   this.filmservice.getItems().subscribe((res: Resource[])=> {
-    //     this.resources=res;
-    //   })
-    // }
-    // if(this.message.message.startsWith('/zandkorrel ')){
-    //   this.filmservice.getItems().subscribe((res: Resource[])=> {
-    //     this.resources=res;
-    //   })
-    // }
+    this.route.params.subscribe((params) => this.chatbox=params.chatboxid)
   }
 
+  checkMessage() {
+    if(this.message.text.startsWith('/')){
+      let counter=0
+      this.services.filter(servicecommand => this.message.text.indexOf(servicecommand.command)!==-1).forEach(command => {
+        counter++
+        this.suggestion="Laden..."
+        command.resourceinterface.getItems().subscribe((res: Resource[])=> {
+          this.resources=res.filter(item => item.title.toLowerCase().indexOf(this.message.text.substring(command.command.length).trim().toLowerCase())>-1 || item.description.toLowerCase().indexOf(this.message.text.substring(command.command.length).trim().toLowerCase())>-1)
+          if(this.resources.length===0){
+            let emptyResource = new Resource()
+            emptyResource.title="Niks gevonden..."
+            this.resources.push(emptyResource)
+            this.selectedResource=null
+          }
+        })
+      })
+      if(counter===0){
+        this.resources=[]
+      }
+    } else {
+      this.resources=[]
+    }
+  }
+  selectResource(index){
+    this.selectedResource=this.resources[index]
+    this.message.text=""
+  }
+  submit(){
+    if (this.message.text.trim().length !== 0) {
+      if(this.selectedResource!==undefined && this.selectedResource!==null){
+        this.messageservice.add(this.message,this.chatbox).subscribe((res: any) => {
+          this.submitResource(this.selectedResource, res[0].id)
+          this.newMessageCreated()
+        })
+      } else {
+        this.messageservice.add(this.message,this.chatbox).subscribe(res => this.newMessageCreated())
+      }
+    }
+  }
+  private submitResource(resource: Resource, messageid: number){
+    resource.message=messageid
+    this.resourcservice.addItem(resource)
+    this.selectedResource=null
+  }
+
+  private newMessageCreated(): void {
+    setTimeout(function(){
+      var chatboxDiv = document.getElementById("chatBox");
+      chatboxDiv.scrollTop = chatboxDiv.scrollHeight;
+    }, 1000);
+    this.message.text=""
+  }
 }

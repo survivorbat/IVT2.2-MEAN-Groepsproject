@@ -6,9 +6,23 @@ const expect = chai.expect()
 require('dotenv').config()
 
 let testID
+let token
 
 chai.use(chaiHttp)
 describe('Chatresource API interface', () => {
+    it('should login', function(done){
+        chai.request(server)
+            .post('/api/token')
+            .set('content-type', 'application/x-www-form-urlencoded')
+            .send({username: 'asdf', password: 'asdf'})
+            .end(function (err, res){
+                res.should.have.status(201);
+                res.body.should.have.property('token');
+                token = res.body.token;
+                console.log(token);
+                done();
+        })
+    })
 	it('should POST /api/chatresources correctly', done => {
         chai.request(server)
             .post('/api/chatresources')

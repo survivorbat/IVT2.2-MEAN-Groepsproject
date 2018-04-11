@@ -1,4 +1,4 @@
-const {session} = require('../config/neodb')
+const {session, neo4j} = require('../config/neodb')
 
 module.exports = {
     getAll(req, res, next){
@@ -6,6 +6,18 @@ module.exports = {
         session.run(query)
             .then((result) => {
                 res.status(200).json(result.records)
+            })
+            .catch(next)
+    },
+    getMe(req, res, next){
+        const params = {id: req.user.sub.userid}
+        const query = "MATCH (u:user) WHERE ID(u)=$id RETURN {id: ID(u), username: u.username} as user"
+        session.run(query,params)
+            .then(result => result.records.map(item => item._fields[0]))
+            .then(transformIntegers)
+            .then((result) => {
+              console.log(result)
+                res.status(200).json(result[0])
             })
             .catch(next)
     },
@@ -31,7 +43,7 @@ module.exports = {
         }
     },
     update(req, res, next){
-        
+
     },
     delete(req,res,next){
         const params = {id: parseInt(req.params._id)}
@@ -41,3 +53,21 @@ module.exports = {
         }).catch(next)
     }
 }
+
+const transformIntegers = function(result) {
+    return new Promise( (resolve,reject) => {
+      try {
+        result.forEach((row, i)=>  {
+            Object.keys(row).forEach((val, j) => {
+
+                row[val] = neo4j.isInt(row[val])
+                ? (neo4j.integer.inSafeRange(row[val]) ? row[val].toNumber() : row[val].toString())
+                : row[val];
+            })
+        })
+        resolve(result);
+      } catch (error) {
+          reject( error );
+      }
+    });
+  };

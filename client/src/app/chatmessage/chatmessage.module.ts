@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MessageService } from './services/message.service';
 import { InputfieldComponent } from './components/inputfield/inputfield.component';
+import { ChatareaComponent } from './components/chatarea/chatarea.component';
 
 @NgModule({
   imports: [
@@ -11,9 +12,10 @@ import { InputfieldComponent } from './components/inputfield/inputfield.componen
     FormsModule
   ],
   exports: [
-    InputfieldComponent  
+    InputfieldComponent,
+    ChatareaComponent
   ],
-  declarations: [InputfieldComponent],
+  declarations: [InputfieldComponent, ChatareaComponent],
   providers: [MessageService]
 })
 export class ChatmessageModule { }
