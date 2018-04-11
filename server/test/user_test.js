@@ -6,12 +6,23 @@ const expect = chai.expect()
 require('dotenv').config()
 
 let token
-let username = "testUsor"
+let username = "testUsorx"
 let pwd = "secretPWD"
 let TestUserID
 
 chai.use(chaiHttp)
 describe('User API interface', () => {
+    it('should create user', function(done){
+        chai.request(server)
+             .post('/api/users')
+             .set('content-type', 'application/x-www-form-urlencoded')
+             .send({username: username, password: pwd})
+               .end(function(err, res){
+                res.should.have.status(201)
+                console.log(res.body)
+                done()
+             })
+     })
     it('should fail to post same user', function(done){
          chai.request(server)
              .post('/api/users')
