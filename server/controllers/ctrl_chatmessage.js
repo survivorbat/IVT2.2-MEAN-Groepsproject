@@ -17,7 +17,7 @@ module.exports = {
         if(req.params.chatbox===undefined){
             return res.status(422).json({"result":"Please add text and a chatbox to your message"})
         }
-        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) WHERE ID(chatbox) = toInteger(97) OPTIONAL MATCH (r:chatresource)-->(m) RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since, resource: ID(r)} as chatmessage"
+        const query = "MATCH (m:chatmessage) MATCH(u:user)-->(m) MATCH(chatbox:chatbox)<--(m) WHERE ID(chatbox) = toInteger($chatbox) OPTIONAL MATCH (r:chatresource)-->(m) RETURN {id: ID(m),username: u.username, chatbox: ID(chatbox), userid: ID(u), text: m.text, since: m.since, resource: ID(r)} as chatmessage"
         const params = {chatbox: parseInt(req.params.chatbox)}
         session.run(query,params)
             .then(result => result.records.map(item => item._fields[0]))

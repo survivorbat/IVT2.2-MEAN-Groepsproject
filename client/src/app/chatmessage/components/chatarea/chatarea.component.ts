@@ -12,6 +12,7 @@ import Chatbox from '../../../chatbox/domain/Chatbox'
 export class ChatareaComponent implements OnInit {
   chatmessages: Message[]
   private interval
+  private loader
   constructor(private chatmessageservice: MessageService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -22,7 +23,7 @@ export class ChatareaComponent implements OnInit {
   }
 
   getMessages(chatbox: number){
-    this.chatmessageservice.getMessages(chatbox).subscribe(res => {this.chatmessages=res.reverse()}, err => {})
+    this.loader = this.chatmessageservice.getMessages(chatbox).subscribe(res => {this.chatmessages=res.reverse()}, err => {})
   }
   deleteMessage(id){
     this.chatmessageservice.remove(id)
