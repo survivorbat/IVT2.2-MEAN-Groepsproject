@@ -3,6 +3,9 @@ import { MessageService } from '../../services/message.service'
 import Message from '../../domain/Message'
 import { ActivatedRoute, Params } from '@angular/router'
 import Chatbox from '../../../chatbox/domain/Chatbox'
+import * as moment from 'moment';
+import 'moment/locale/nl';
+
 
 @Component({
   selector: 'app-chatarea',
@@ -27,5 +30,8 @@ export class ChatareaComponent implements OnInit {
   }
   deleteMessage(id){
     this.chatmessageservice.remove(id)
+  }
+  timeAgo(time) {
+    return moment(time).fromNow()
   }
 }
